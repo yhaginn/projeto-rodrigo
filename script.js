@@ -1,15 +1,12 @@
-
-/* ========================================= V.O.X — SCRIPT PRINCIPAL ========================================= */
-
-/* ========================================= VARIÁVEIS ========================================= */
-
 let cart = [];
 
 let favorites = [];
 
-const cartButton = document.getElementById("cartButton");
+/* ========================= ELEMENTOS ========================= */
 
 const cartPanel = document.getElementById("cart");
+
+const cartButton = document.getElementById("cartButton");
 
 const closeCart = document.getElementById("closeCart");
 
@@ -21,9 +18,7 @@ const cartTotal = document.getElementById("cartTotal");
 
 const toast = document.getElementById("toast");
 
-/* ========================================= ABRIR CARRINHO ========================================= */
-
-if (cartButton) {
+/* ========================= CARRINHO ========================= */
 
 cartButton.addEventListener("click", () => {
 
@@ -31,39 +26,27 @@ cartPanel.classList.add("open");
 
 });
 
-}
-
-/* ========================================= FECHAR CARRINHO ========================================= */
-
-if (closeCart) {
-
 closeCart.addEventListener("click", () => {
 
 cartPanel.classList.remove("open");
 
 });
 
-}
+/* ========================= COMPRAR ========================= */
 
-/* ========================================= ADICIONAR AO CARRINHO ========================================= */
-
-document .querySelectorAll(".buy-button") .forEach(button => {
+document.querySelectorAll(".buy-button").forEach(button => {
 
 button.addEventListener("click", () => {
 
 const card = button.closest(".game-card");
 
-if (!card) return;
+const name = card.querySelector("h3").textContent;
 
-const name = card.querySelector("h3") .textContent;
-
-const priceText = card.querySelector(".game-price") .textContent .replace("R$", "") .replace(",", ".");
-
-const price = parseFloat(priceText);
+const price = parseFloat( card.querySelector(".game-price") .textContent .replace("R$", "") .replace(",", ".") );
 
 const icon = card.querySelector(".game-cover") .textContent .trim();
 
-const existing = cart.find( item => item.name === name );
+const existing = cart.find(item => item.name === name);
 
 if (existing) {
 
@@ -71,55 +54,33 @@ existing.quantity++;
 
 } else {
 
-cart.push({
-
-name: name,
-
-price: price,
-
-icon: icon,
-
-quantity: 1
-
-});
+cart.push({ name: name, price: price, icon: icon, quantity: 1 });
 
 }
 
 updateCart();
 
-showToast( 🎮 ${name} foi adicionado ao carrinho! );
+showToast( 🎮 ${name} adicionado ao carrinho! );
 
 });
 
 });
 
-/* ========================================= ATUALIZAR CARRINHO ========================================= */
+/* ========================= ATUALIZAR CARRINHO ========================= */
 
 function updateCart() {
 
-if (!cartItems) return;
-
 cartItems.innerHTML = "";
-
-if (cart.length === 0) {
-
-cartItems.innerHTML = `
-
-<div class="empty-cart">
-
-<span>🛒</span>
-
-<p> Seu carrinho está vazio. </p>
-
-</div>
-
-`;
-
-}
 
 let total = 0;
 
 let quantity = 0;
+
+if (cart.length === 0) {
+
+cartItems.innerHTML = <div class="empty-cart"> <span>🛒</span> <p>Seu carrinho está vazio.</p> </div> ;
+
+}
 
 cart.forEach((item, index) => {
 
@@ -127,11 +88,11 @@ total += item.price * item.quantity;
 
 quantity += item.quantity;
 
-const element = document.createElement("div");
+const div = document.createElement("div");
 
-element.className = "cart-item";
+div.className = "cart-item";
 
-element.innerHTML = `
+div.innerHTML = `
 
 <div class="cart-icon"> ${item.icon} </div>
 
@@ -149,91 +110,75 @@ element.innerHTML = `
 
 `;
 
-cartItems.appendChild(element);
+cartItems.appendChild(div);
 
 });
 
-if (cartCount) {
-
 cartCount.textContent = quantity;
-
-}
-
-if (cartTotal) {
 
 cartTotal.textContent = R$ ${total .toFixed(2) .replace(".", ",")};
 
-}
-
 document .querySelectorAll(".remove-item") .forEach(button => {
 
-button.addEventListener( "click", () => {
+button.addEventListener("click", () => {
 
-const index = Number( button.dataset.index );
+const index = Number(button.dataset.index);
 
-const item = cart[index];
+if ( cart[index].quantity > 1 ) {
 
-if ( item.quantity > 1 ) {
-
-item.quantity--;
+cart[index].quantity--;
 
 } else {
 
-cart.splice( index, 1 );
+cart.splice(index, 1);
 
 }
 
 updateCart();
 
-} );
+});
 
 });
 
 }
 
-/* ========================================= FAVORITOS ========================================= */
+/* ========================= FAVORITOS ========================= */
 
 document .querySelectorAll(".favorite-button") .forEach(button => {
 
-button.addEventListener( "click", () => {
+button.addEventListener("click", () => {
 
 const card = button.closest(".game-card");
 
 const name = card.querySelector("h3") .textContent;
 
-button.classList.toggle( "active" );
+button.classList.toggle("active");
 
-const isFavorite = button.classList.contains( "active" );
-
-if (isFavorite) {
-
-favorites.push(name);
+if ( button.classList.contains("active") ) {
 
 button.textContent = "♥";
 
-showToast( ❤️ ${name} foi adicionado aos favoritos! );
+favorites.push(name);
+
+showToast( ❤️ ${name} favoritado! );
 
 } else {
 
-favorites = favorites.filter( item => item !== name );
-
 button.textContent = "♡";
 
-showToast( 💔 ${name} foi removido dos favoritos. );
+favorites = favorites.filter( item => item !== name );
 
 }
 
-} );
+});
 
 });
 
-/* ========================================= PESQUISA DE JOGOS ========================================= */
+/* ========================= PESQUISA ========================= */
 
-const searchInput = document.getElementById( "searchInput" );
+const searchInput = document.getElementById("searchInput");
 
-if (searchInput) {
-
-searchInput.addEventListener( "input", () => {
+searchInput.addEventListener("input", () => {
 
 const search = searchInput.value .toLowerCase() .trim();
 
@@ -241,35 +186,21 @@ document .querySelectorAll(".game-card") .forEach(card => {
 
 const name = card.querySelector("h3") .textContent .toLowerCase();
 
-if ( name.includes(search) ) {
-
-card.style.display = "";
-
-} else {
-
-card.style.display = "none";
-
-}
+card.style.display = name.includes(search) ? "" : "none";
 
 });
 
-} );
+});
 
-}
-
-/* ========================================= FILTROS ========================================= */
+/* ========================= FILTROS ========================= */
 
 document .querySelectorAll(".filter") .forEach(filter => {
 
-filter.addEventListener( "click", () => {
+filter.addEventListener("click", () => {
 
-document .querySelectorAll(".filter") .forEach(item => {
+document .querySelectorAll(".filter") .forEach(item => item.classList.remove("active") );
 
-item.classList.remove( "active" );
-
-});
-
-filter.classList.add( "active" );
+filter.classList.add("active");
 
 const category = filter.dataset.category;
 
@@ -289,119 +220,87 @@ card.style.display = "none";
 
 });
 
-} );
+});
 
 });
 
-/* ========================================= TEMA CLARO / ESCURO ========================================= */
+/* ========================= TEMA ========================= */
 
-const themeButton = document.getElementById( "themeButton" );
+const themeButton = document.getElementById("themeButton");
 
-if (themeButton) {
+themeButton.addEventListener("click", () => {
 
-themeButton.addEventListener( "click", () => {
+document.body.classList.toggle("light");
 
-document.body.classList.toggle( "light" );
+const isLight = document.body.classList.contains("light");
 
-const light = document.body.classList.contains( "light" );
+themeButton.textContent = isLight ? "🌙" : "☀️";
 
-themeButton.textContent = light ? "🌙" : "☀️";
+});
 
-localStorage.setItem( "vox-theme", light ? "light" : "dark" );
+/* ========================= LOGIN ========================= */
 
-} );
+const loginButton = document.getElementById("loginButton");
 
-}
+const loginModal = document.getElementById("loginModal");
 
-/* ========================================= CARREGAR TEMA SALVO ========================================= */
+const closeModal = document.getElementById("closeModal");
 
-const savedTheme = localStorage.getItem( "vox-theme" );
+loginButton.addEventListener("click", () => {
 
-if (savedTheme === "light") {
+loginModal.classList.add("show");
 
-document.body.classList.add( "light" );
+});
 
-if (themeButton) {
+closeModal.addEventListener("click", () => {
 
-themeButton.textContent = "🌙";
+loginModal.classList.remove("show");
 
-}
+});
 
-}
+loginModal.addEventListener("click", event => {
 
-/* ========================================= MODAL DE LOGIN ========================================= */
+if (event.target === loginModal) {
 
-const loginButton = document.getElementById( "loginButton" );
-
-const loginModal = document.getElementById( "loginModal" );
-
-const closeModal = document.getElementById( "closeModal" );
-
-if ( loginButton && loginModal ) {
-
-loginButton.addEventListener( "click", () => {
-
-loginModal.classList.add( "show" );
-
-} );
+loginModal.classList.remove("show");
 
 }
 
-if ( closeModal && loginModal ) {
+});
 
-closeModal.addEventListener( "click", () => {
+/* ========================= FORMULÁRIO ========================= */
 
-loginModal.classList.remove( "show" );
+const loginForm = document.getElementById("loginForm");
 
-} );
-
-}
-
-/* ========================================= FECHAR MODAL CLICANDO FORA ========================================= */
-
-if (loginModal) {
-
-loginModal.addEventListener( "click", event => {
-
-if ( event.target === loginModal ) {
-
-loginModal.classList.remove( "show" );
-
-}
-
-} );
-
-}
-
-/* ========================================= LOGIN ========================================= */
-
-const loginForm = document.getElementById( "loginForm" );
-
-if (loginForm) {
-
-loginForm.addEventListener( "submit", event => {
+loginForm.addEventListener("submit", event => {
 
 event.preventDefault();
 
-const name = document.getElementById( "loginName" ).value;
+const name = document.getElementById("loginName").value;
 
-loginModal.classList.remove( "show" );
+loginModal.classList.remove("show");
 
 showToast( 👋 Bem-vindo à V.O.X, ${name}! );
 
 loginForm.reset();
 
-} );
+});
 
-}
+/* ========================= OFERTAS ========================= */
 
-/* ========================================= FINALIZAR COMPRA ========================================= */
+const offerButton = document.getElementById("offerButton");
 
-const checkoutButton = document.querySelector( ".checkout" );
+offerButton.addEventListener("click", () => {
 
-if (checkoutButton) {
+document .getElementById("games") .scrollIntoView({ behavior: "smooth" });
 
-checkoutButton.addEventListener( "click", () => {
+showToast( "🔥 Confira nossos jogos!" );
+
+});
+
+/* ========================= FINALIZAR COMPRA ========================= */
+
+document .querySelector(".checkout") .addEventListener("click", () => {
 
 if (cart.length === 0) {
 
@@ -411,7 +310,7 @@ return;
 
 }
 
-showToast( "🎉 Compra iniciada com sucesso!" );
+showToast( "🎉 Compra iniciada!" );
 
 setTimeout(() => {
 
@@ -419,74 +318,44 @@ cart = [];
 
 updateCart();
 
-cartPanel.classList.remove( "open" );
+cartPanel.classList.remove("open");
 
 }, 1500);
 
-} );
+});
 
-}
-
-/* ========================================= BOTÃO DE OFERTA ========================================= */
-
-const offerButton = document.getElementById( "offerButton" );
-
-if (offerButton) {
-
-offerButton.addEventListener( "click", () => {
-
-document .getElementById( "games" ) ?.scrollIntoView({ behavior: "smooth" });
-
-showToast( "🔥 Confira os jogos em oferta!" );
-
-} );
-
-}
-
-/* ========================================= NOTIFICAÇÃO ========================================= */
+/* ========================= NOTIFICAÇÃO ========================= */
 
 function showToast(message) {
 
-if (!toast) return;
-
 toast.textContent = message;
 
-toast.classList.add( "show" );
+toast.classList.add("show");
 
 setTimeout(() => {
 
-toast.classList.remove( "show" );
+toast.classList.remove("show");
 
 }, 3000);
 
 }
 
-/* ========================================= TECLA ESC ========================================= */
+/* ========================= ESC ========================= */
 
-document.addEventListener( "keydown", event => {
+document.addEventListener("keydown", event => {
 
 if (event.key === "Escape") {
 
-if (cartPanel) {
+cartPanel.classList.remove("open");
 
-cartPanel.classList.remove( "open" );
-
-}
-
-if (loginModal) {
-
-loginModal.classList.remove( "show" );
+loginModal.classList.remove("show");
 
 }
 
-}
+});
 
-} );
-
-/* ========================================= INICIALIZAÇÃO ========================================= */
+/* ========================= INICIAR ========================= */
 
 updateCart();
 
 console.log( "🎮 V.O.X carregada com sucesso!" );
-
-console.log( "🔥 Bem-vindo à sua loja de jogos!" );
