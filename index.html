@@ -1,170 +1,238 @@
-<!DOCTYPE html> <html lang="pt-BR"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>GameZone | Loja de Jogos</title>
+<!DOCTYPE html> <html lang="pt-BR">
+
+<head> <meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0"
+
+<title>V.O.X | Loja Gamer</title>
 
 <link rel="stylesheet" href="style.css"> </head>
 
 <body>
 
-<!-- CABEÇALHO --> <header> <div class="logo"> GAME<span>ZONE</span> </div>
+<!-- ================= HEADER ================= -->
 
-<nav> <a href="#inicio">Início</a> <a href="#jogos">Jogos</a> <a href="#ofertas">Ofertas</a> <a href="#contato">Contato</a> </nav>
+<header class="header">
 
-<div class="header-buttons"> <button class="icon-btn" id="themeBtn"> 🌙 </button>
+<a href="#inicio" class="logo"> V<span>.O.X</span> </a>
 
-<button class="icon-btn" id="cartBtn"> 🛒 <span id="cartCount">0</span> </button> </div> </header>
+<nav class="nav">
 
-<!-- HERO --> <main>
+<a href="#inicio"> Início </a>
 
-<section class="hero" id="inicio">
+<a href="#jogos"> Jogos </a>
+
+<a href="#ofertas"> Ofertas </a>
+
+<a href="#sobre"> Sobre </a>
+
+</nav>
+
+<div class="header-actions">
+
+<button class="icon-button" id="themeButton" title="Mudar tema" > 🌙 </button>
+
+<button class="icon-button" id="cartButton" title="Abrir carrinho" > 🛒 <span id="cartCount">0</span> </button>
+
+</div>
+
+</header>
+
+<!-- ================= HERO ================= -->
+
+<main>
+
+<section class="hero" id="inicio" >
 
 <div class="hero-content">
 
-<span class="hero-tag"> 🎮 A MELHOR LOJA GAMER </span>
+<p class="hero-label"> ⚡ BEM-VINDO À V.O.X </p>
 
-<h1> O próximo jogo da sua <span>aventura.</span> </h1>
+<h1> ENTRE NO <span>UNIVERSO</span> DOS JOGOS. </h1>
 
-<p> Encontre os melhores jogos para PC e consoles, lançamentos incríveis e ofertas especiais. </p>
+<p class="hero-description"> Descubra novos mundos, desafios incríveis e os melhores jogos em um só lugar. </p>
 
-<a href="#jogos" class="primary-btn"> Explorar jogos 🎮 </a>
+<div class="hero-buttons">
+
+<a href="#jogos" class="button primary" > Explorar jogos 🎮 </a>
+
+<!-- ABRE OUTRA ABA --> <a href="https://store.steampowered.com/" target="_blank" rel="noopener noreferrer" class="button secondary" > Steam ↗ </a>
+
+</div>
+
+</div>
+
+<div class="hero-decoration">
+
+<div class="orb orb-one"></div> <div class="orb orb-two"></div>
+
+<div class="hero-controller"> 🎮 </div>
 
 </div>
 
 </section>
 
-<!-- JOGOS --> <section id="jogos">
+<!-- ================= JOGOS ================= -->
 
-<div class="section-title"> <div> <span class="small-title"> NOSSO CATÁLOGO </span>
+<section class="games-section" id="jogos" >
 
-<h2> Jogos em destaque </h2> </div> </div>
+<div class="section-heading">
 
-<!-- BUSCA --> <div class="search-area">
+<div> <p> CATÁLOGO </p>
 
-<input type="text" id="search" class="search" placeholder="🔎 Procurar jogo..." >
+<h2> Jogos em destaque </h2> </div>
 
-<div class="categories">
-
-<button class="category active" data-category="Todos"> Todos </button>
-
-<button class="category" data-category="Ação"> Ação </button>
-
-<button class="category" data-category="RPG"> RPG </button>
-
-<button class="category" data-category="Corrida"> Corrida </button>
-
-<button class="category" data-category="Esportes"> Esportes </button>
+<button class="button secondary" id="randomGame" > 🎲 Jogo aleatório </button>
 
 </div>
 
+<!-- BUSCA -->
+
+<div class="search-container">
+
+<input type="search" id="searchInput" placeholder="🔎 Procurar um jogo..." >
+
 </div>
 
-<!-- CARDS --> <div class="games-grid" id="gamesGrid"> </div>
+<!-- FILTROS -->
+
+<div class="filters">
+
+<button class="filter active" data-category="Todos" > Todos </button>
+
+<button class="filter" data-category="Ação" > Ação </button>
+
+<button class="filter" data-category="RPG" > RPG </button>
+
+<button class="filter" data-category="Corrida" > Corrida </button>
+
+<button class="filter" data-category="Esportes" > Esportes </button>
+
+</div>
+
+<!-- JOGOS -->
+
+<div class="games-grid" id="gamesGrid" > </div>
 
 </section>
 
-<!-- OFERTA --> <section id="ofertas">
+<!-- ================= OFERTA ================= -->
 
-<div class="promo">
+<section class="offer-section" id="ofertas" >
 
-<div class="promo-content">
+<div class="offer">
 
-<span> 🔥 OFERTA LIMITADA </span>
+<div>
 
-<h2> Até 50% de desconto </h2>
+<p class="offer-label"> 🔥 OFERTA ESPECIAL </p>
 
-<p> Aproveite nossas ofertas especiais antes que elas acabem. </p>
+<h2> Até 50% OFF </h2>
+
+<p> Aproveite descontos em jogos selecionados da V.O.X. </p>
+
+</div>
+
+<button class="button primary" id="offerButton" > Aproveitar oferta </button>
 
 </div>
 
-<button class="primary-btn" id="offerBtn"> Ver ofertas </button>
+</section>
 
-</div>
+<!-- ================= SOBRE ================= -->
+
+<section class="about" id="sobre" >
+
+<p class="section-label"> SOBRE A V.O.X </p>
+
+<h2> MAIS QUE UMA LOJA. <span>UMA EXPERIÊNCIA.</span> </h2>
+
+<p> A V.O.X foi criada para gamers que querem descobrir novos jogos, acompanhar lançamentos e encontrar grandes ofertas. </p>
+
+<button class="button primary" id="aboutButton" > Conhecer a V.O.X </button>
 
 </section>
 
 </main>
 
-<!-- RODAPÉ --> <footer id="contato">
+<!-- ================= FOOTER ================= -->
 
-<div class="footer-logo"> GAME<span>ZONE</span> </div>
+<footer>
 
-<p> A sua loja de jogos favorita. </p>
+<div class="footer-logo"> V<span>.O.X</span> </div>
 
-<p class="copyright"> © 2026 GameZone. Todos os direitos reservados. </p>
+<p> Sua próxima aventura começa aqui. </p>
 
-</footer>
+<div class="social-links">
 
-<!-- CARRINHO --> <aside class="cart" id="cart">
+<!-- OUTRAS ABAS -->
 
-<div class="cart-header">
+<a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" > YouTube </a>
 
-<div> <span class="small-title"> SUA COMPRA </span>
+<a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" > Instagram </a>
 
-<h2> Carrinho </h2> </div>
-
-<button class="close-btn" id="closeCart"> × </button>
+<a href="https://discord.com/" target="_blank" rel="noopener noreferrer" > Discord </a>
 
 </div>
 
-<div class="cart-items" id="cartItems">
+<p class="copyright"> © 2026 V.O.X — Todos os direitos reservados. </p>
 
-<div class="empty-cart"> <span>🛒</span>
+</footer>
 
-<p> Seu carrinho está vazio. </p> </div>
+<!-- ================= CARRINHO ================= -->
+
+<aside class="cart" id="cart"
+
+<div class="cart-header">
+
+<h2> Seu carrinho </h2>
+
+<button class="close-button" id="closeCart" > × </button>
+
+</div>
+
+<div class="cart-items" id="cartItems" >
+
+<div class="empty-cart"> 🛒 <p> Seu carrinho está vazio. </p> </div>
 
 </div>
 
 <div class="cart-footer">
 
-<div class="total">
+<div class="cart-total">
 
-<span>Total</span>
+<span> Total </span>
 
 <strong id="cartTotal"> R$ 0,00 </strong>
 
 </div>
 
-<button class="primary-btn checkout" id="checkoutBtn"> Finalizar compra </button>
+<button class="button primary checkout" id="checkoutButton" > Finalizar compra </button>
 
 </div>
 
 </aside>
 
-<!-- MODAL DE PAGAMENTO --> <div class="modal" id="modal">
+<!-- ================= MODAL ================= -->
 
-<div class="modal-content">
+<div class="modal" id="modal"
 
-<button class="close-btn" id="closeModal"> × </button>
+<div class="modal-box">
 
-<span class="small-title"> PAGAMENTO </span>
+<button class="close-button" id="closeModal" > × </button>
+
+<p class="section-label"> V.O.X </p>
 
 <h2> Finalizar compra </h2>
 
 <form id="checkoutForm">
 
-<div class="form-group">
+<input type="text" placeholder="Seu nome" required >
 
-<label for="name"> Nome </label>
+<input type="email" placeholder="Seu e-mail" required >
 
-<input id="name" type="text" placeholder="Seu nome" required>
+<input type="text" placeholder="Número do cartão" maxlength="19" required >
 
-</div>
-
-<div class="form-group">
-
-<label for="email"> E-mail </label>
-
-<input id="email" type="email" placeholder="seu@email.com" required>
-
-</div>
-
-<div class="form-group">
-
-<label for="card"> Número do cartão </label>
-
-<input id="card" type="text" placeholder="0000 0000 0000 0000" maxlength="19" required>
-
-</div>
-
-<button class="primary-btn checkout" type="submit"> Confirmar compra 💳 </button>
+<button class="button primary" type="submit" > Confirmar compra 💳 </button>
 
 </form>
 
@@ -172,8 +240,16 @@
 
 </div>
 
-<!-- NOTIFICAÇÃO --> <div class="toast" id="toast"> </div>
+<!-- ================= NOTIFICAÇÃO ================= -->
+
+<div class="toast" id="toast"
+
+</div>
+
+<!-- JAVASCRIPT -->
 
 <script src="script.js"></script>
 
-</body> </html>
+</body>
+
+</html>
