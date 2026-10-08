@@ -4,893 +4,307 @@ margin: 0; padding: 0; box-sizing: border-box; }
 
 html { scroll-behavior: smooth; }
 
-body { font-family: Arial, Helvetica, sans-serif;
+body { background: #08080d; color: white; font-family: Arial, sans-serif; transition: .3s; }
 
-background: #09090f;
+button { cursor: pointer; font-family: Arial, sans-serif; }
 
-color: white;
+header { position: sticky; top: 0; z-index: 1000;
 
-transition: .3s; }
+height: 70px;
 
-button, input, select { font-family: inherit; }
-
-button { cursor: pointer; }
-
-/* ===================================== HEADER ===================================== */
-
-.header { position: sticky;
-
-top: 0;
-
-z-index: 1000;
-
-height: 75px;
+display: flex; align-items: center; justify-content: space-between;
 
 padding: 0 7%;
 
-display: flex;
-
-align-items: center;
-
-justify-content: space-between;
-
-background: rgba(9, 9, 15, .92);
-
-backdrop-filter: blur(15px);
+background: #101018;
 
 border-bottom: 1px solid #292936; }
 
-.logo { color: #ff1744;
-
-font-size: 28px;
-
-font-weight: 900;
-
-text-decoration: none;
-
-letter-spacing: 3px; }
+.logo { font-size: 28px; font-weight: bold; color: #ff1744; }
 
 .logo span { color: #ffd600; }
 
-.nav { display: flex;
+nav { display: flex; gap: 25px; }
 
-gap: 30px; }
+nav a { color: white; text-decoration: none; }
 
-.nav a { color: #aaa;
+nav a:hover { color: #ff1744; }
 
-text-decoration: none;
+.header-buttons { display: flex; gap: 8px; }
 
-font-weight: bold;
+.header-buttons button { width: 42px; height: 42px;
 
-transition: .3s; }
+border: 1px solid #333340; border-radius: 8px;
 
-.nav a:hover { color: #ff1744; }
+background: #191923; color: white;
 
-.header-buttons { display: flex;
+transition: .2s; }
 
-gap: 10px; }
+.header-buttons button:hover { background: #ff1744; transform: translateY(-2px); }
 
-.icon-button { width: 42px; height: 42px;
-
-border: 1px solid #30303b;
-
-border-radius: 10px;
-
-background: #15151e;
-
-color: white;
-
-transition: .3s; }
-
-.icon-button:hover { background: #ff1744;
-
-border-color: #ff1744;
-
-transform: translateY(-3px); }
-
-.cart-button { position: relative; }
+#cartButton { position: relative; }
 
 #cartCount { position: absolute;
 
-top: -6px;
+top: -7px; right: -7px;
 
-right: -6px;
+width: 19px; height: 19px;
 
-width: 20px; height: 20px;
+display: flex; align-items: center; justify-content: center;
 
-display: flex;
-
-align-items: center;
-
-justify-content: center;
-
-background: #ffd600;
-
-color: #111;
+background: #ffd600; color: black;
 
 border-radius: 50%;
 
-font-size: 11px;
+font-size: 11px; font-weight: bold; }
 
-font-weight: bold; }
+/* HERO */
 
-/* ===================================== BOTÕES ===================================== */
+.hero { min-height: 600px;
 
-.button { display: inline-flex;
-
-align-items: center;
-
-justify-content: center;
-
-padding: 15px 23px;
-
-border: 0;
-
-border-radius: 10px;
-
-color: white;
-
-text-decoration: none;
-
-font-weight: bold;
-
-transition: .3s; }
-
-.button:hover { transform: translateY(-4px); }
-
-.primary { background: linear-gradient( 135deg, #ff1744, #ff6d00 );
-
-box-shadow: 0 10px 30px rgba(255, 23, 68, .2); }
-
-.secondary { background: #15151e;
-
-border: 1px solid #3a3a46; }
-
-/* ===================================== HERO ===================================== */
-
-.hero { min-height: 650px;
+display: flex; align-items: center;
 
 padding: 80px 7%;
 
-display: flex;
+background: radial-gradient( circle at 80%, #491020, transparent 40% ); }
 
-align-items: center;
+.yellow { color: #ffd600; font-weight: bold; letter-spacing: 2px; }
 
-justify-content: space-between;
+.hero h1 { margin-top: 20px;
 
-overflow: hidden;
+font-size: clamp(50px, 8vw, 100px);
 
-background: radial-gradient( circle at 80% 40%, rgba(255, 23, 68, .2), transparent 35% ); }
+line-height: .9; }
 
-.hero-content { max-width: 700px; }
+.hero h1 span { display: block; color: #ff1744; }
 
-.small-title { color: #ffd600;
+.description { margin: 30px 0;
 
-font-weight: bold;
+max-width: 500px;
 
-letter-spacing: 3px;
+color: #999;
 
-margin-bottom: 20px; }
+font-size: 18px; line-height: 1.6; }
 
-.hero h1 { font-size: clamp(55px, 8vw, 100px);
+/* BOTÃO */
 
-line-height: .9;
+.main-button { padding: 14px 22px;
 
-letter-spacing: -6px;
+border: none; border-radius: 9px;
 
-margin-bottom: 30px; }
-
-.hero h1 span { display: block;
-
-color: #ff1744;
-
-text-shadow: 0 0 30px rgba(255, 23, 68, .4); }
-
-.hero-text { color: #999;
-
-font-size: 18px;
-
-line-height: 1.7;
-
-margin-bottom: 30px;
-
-max-width: 600px; }
-
-.hero-buttons { display: flex;
-
-gap: 12px;
-
-flex-wrap: wrap; }
-
-.hero-visual { width: 400px; height: 400px;
-
-display: flex;
-
-align-items: center;
-
-justify-content: center;
-
-position: relative; }
-
-.controller { position: relative;
-
-z-index: 2;
-
-font-size: 170px;
-
-filter: drop-shadow( 0 0 30px rgba(255, 23, 68, .6) );
-
-animation: float 4s infinite ease-in-out; }
-
-.glow { position: absolute;
-
-width: 300px; height: 300px;
-
-border-radius: 50%;
-
-background: #ff1744;
-
-opacity: .15;
-
-filter: blur(40px); }
-
-@keyframes float {
-
-50% { transform: translateY(-20px); }
-
-}
-
-/* ===================================== GTA VI ===================================== */
-
-.gta-section { padding: 70px 7%;
-
-background: linear-gradient( 135deg, #16070d, #351008, #15070d );
-
-border-top: 1px solid #ff1744;
-
-border-bottom: 1px solid #ff1744; }
-
-.gta-content { text-align: center;
-
-max-width: 1000px;
-
-margin: auto; }
-
-.gta-label { color: #ffd600;
-
-font-weight: bold;
-
-letter-spacing: 4px;
-
-margin-bottom: 15px; }
-
-.gta-content h2 { font-size: clamp(70px, 12vw, 150px);
-
-line-height: .8;
-
-color: #ff1744;
-
-text-shadow: 5px 5px 0 #ffd600, 0 0 30px rgba(255, 23, 68, .4); }
-
-.gta-content h3 { color: #ff6d00;
-
-font-size: clamp(25px, 4vw, 50px);
-
-margin: 20px 0; }
-
-.gta-content > p { color: #aaa; }
-
-/* ===================================== CONTADOR ===================================== */
-
-.countdown { display: flex;
-
-justify-content: center;
-
-gap: 12px;
-
-margin: 35px 0; }
-
-.count-box { min-width: 100px;
-
-padding: 18px;
-
-background: rgba(255,255,255,.05);
-
-border: 1px solid #3b3030;
-
-border-radius: 15px;
-
-transition: .3s; }
-
-.count-box:hover { border-color: #ffd600;
-
-transform: translateY(-5px); }
-
-.count-box strong { display: block;
-
-font-size: 38px;
-
-color: #ffd600; }
-
-.count-box span { color: #888;
-
-font-size: 11px;
-
-font-weight: bold;
-
-letter-spacing: 2px; }
-
-.release-date { margin-bottom: 25px; }
-
-.release-date strong { color: #ffd600; }
-
-/* ===================================== JOGOS ===================================== */
-
-.games-section { padding: 90px 7%; }
-
-.section-title p { color: #ff6d00;
-
-font-weight: bold;
-
-letter-spacing: 3px; }
-
-.section-title h2 { font-size: 40px;
-
-margin: 8px 0 30px; }
-
-.search-box { margin-bottom: 20px; }
-
-.search-box input { width: 100%;
-
-padding: 17px 20px;
-
-background: #12121a;
-
-border: 1px solid #343440;
-
-border-radius: 12px;
+background: linear-gradient( 135deg, #ff1744, #ff6d00 );
 
 color: white;
 
-outline: none;
+font-weight: bold;
 
-transition: .3s; }
+transition: .2s; }
 
-.search-box input:focus { border-color: #ff1744;
+.main-button:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(255,23,68,.3); }
 
-box-shadow: 0 0 20px rgba(255,23,68,.15); }
+/* GTA */
 
-/* ===================================== FILTROS ===================================== */
+.gta { padding: 80px 7%;
+
+text-align: center;
+
+background: linear-gradient( 135deg, #1c070d, #421005 );
+
+border-top: 1px solid #ff1744; border-bottom: 1px solid #ff1744; }
+
+.gta h2 { margin-top: 15px;
+
+font-size: clamp(70px, 12vw, 150px);
+
+color: #ff1744;
+
+text-shadow: 5px 5px #ffd600; }
+
+.gta h3 { margin: 20px;
+
+color: #ff6d00;
+
+font-size: 40px; }
+
+.countdown { display: flex; justify-content: center;
+
+gap: 10px;
+
+margin: 35px 0; }
+
+.countdown div { width: 100px;
+
+padding: 15px;
+
+background: #15151e;
+
+border: 1px solid #3a3030;
+
+border-radius: 10px; }
+
+.countdown strong { display: block;
+
+color: #ffd600;
+
+font-size: 35px; }
+
+.countdown small { color: #777; }
+
+/* JOGOS */
+
+.games { padding: 80px 7%; }
+
+.games > h2 { font-size: 40px;
+
+margin-bottom: 30px; }
 
 .filters { display: flex;
 
 gap: 10px;
 
-flex-wrap: wrap;
-
-margin-bottom: 35px; }
+margin-bottom: 30px; }
 
 .filter { padding: 10px 18px;
 
-border-radius: 30px;
+border: 1px solid #333340; border-radius: 30px;
 
-background: #13131c;
+background: #15151e; color: #aaa; }
 
-border: 1px solid #33333e;
-
-color: #aaa;
-
-transition: .3s; }
-
-.filter:hover { border-color: #ffd600;
-
-color: #ffd600; }
-
-.filter.active { background: #ff1744;
-
-color: white;
-
-border-color: #ff1744; }
-
-/* ===================================== CARDS ===================================== */
+.filter.active, .filter:hover { background: #ff1744; color: white; border-color: #ff1744; }
 
 .games-grid { display: grid;
 
-grid-template-columns: repeat( auto-fit, minmax(230px, 1fr) );
+grid-template-columns: repeat( auto-fit, minmax(220px, 1fr) );
 
-gap: 22px; }
+gap: 20px; }
 
-.game-card { position: relative;
+.game-card { padding: 20px;
 
-overflow: hidden;
+background: #13131c;
 
-background: #12121a;
+border: 1px solid #292936;
 
-border: 1px solid #292934;
+border-radius: 15px;
 
-border-radius: 18px;
-
-transition: .35s; }
+transition: .3s; }
 
 .game-card:hover { transform: translateY(-8px);
 
-border-color: #ff6d00;
+border-color: #ff1744; }
 
-box-shadow: 0 20px 45px rgba(0,0,0,.4); }
+.game-image { height: 180px;
 
-.game-card.featured { border-color: #ff1744; }
+display: flex; align-items: center; justify-content: center;
 
-.game-image { height: 250px;
-
-display: flex;
-
-align-items: center;
-
-justify-content: center;
-
-font-size: 80px;
-
-background: radial-gradient( circle, #38202a, #111119 ); }
-
-.gta-image { flex-direction: column;
-
-font-size: 55px;
-
-color: #ff9d00;
-
-font-weight: 900; }
-
-.gta-image strong { font-size: 90px;
-
-color: #ff1744;
-
-text-shadow: 4px 4px 0 #ffd600; }
-
-.game-info { padding: 20px; }
-
-.game-info h3 { margin-bottom: 8px; }
-
-.game-info p { color: #777;
-
-font-size: 13px;
-
-margin-bottom: 18px; }
-
-.game-footer { display: flex;
-
-align-items: center;
-
-justify-content: space-between; }
-
-.price { color: #ffd600;
-
-font-size: 18px; }
-
-.add-button { padding: 9px 13px;
-
-background: #ff1744;
-
-border: 0;
-
-border-radius: 8px;
-
-color: white;
-
-font-weight: bold;
-
-transition: .3s; }
-
-.add-button:hover { background: #ff6d00;
-
-transform: scale(1.05); }
-
-.favorite { position: absolute;
-
-top: 12px;
-
-right: 12px;
-
-z-index: 5;
-
-width: 38px; height: 38px;
-
-border: 0;
-
-border-radius: 50%;
-
-background: rgba(0,0,0,.7);
-
-color: white;
-
-font-size: 20px; }
-
-.favorite.active { background: white;
-
-color: #ff1744; }
-
-/* ===================================== OFERTAS ===================================== */
-
-.offers { margin: 0 7% 90px;
-
-padding: 45px;
-
-display: flex;
-
-align-items: center;
-
-justify-content: space-between;
-
-gap: 30px;
-
-border-radius: 20px;
-
-background: linear-gradient( 135deg, #4c1020, #702f05 ); }
-
-.offers p { color: #ffd600;
-
-font-weight: bold;
-
-letter-spacing: 2px; }
-
-.offers h2 { font-size: 42px;
-
-margin: 8px 0; }
-
-/* ===================================== FOOTER ===================================== */
-
-footer { padding: 50px 7%;
-
-text-align: center;
-
-background: #050509;
-
-border-top: 1px solid #292936; }
-
-footer .logo { margin-bottom: 10px; }
-
-footer p { color: #777;
-
-margin-bottom: 10px; }
-
-/* ===================================== CARRINHO ===================================== */
-
-.overlay { position: fixed;
-
-inset: 0;
-
-z-index: 1999;
-
-background: rgba(0,0,0,.7);
-
-opacity: 0;
-
-visibility: hidden;
-
-transition: .3s; }
-
-.overlay.show { opacity: 1;
-
-visibility: visible; }
-
-.cart { position: fixed;
-
-top: 0;
-
-right: -450px;
-
-z-index: 2000;
-
-width: 430px;
-
-max-width: 100%;
-
-height: 100vh;
-
-display: flex;
-
-flex-direction: column;
-
-background: #111119;
-
-border-left: 2px solid #ff1744;
-
-transition: .4s; }
-
-.cart.open { right: 0; }
-
-.cart-header { padding: 25px;
-
-display: flex;
-
-align-items: center;
-
-justify-content: space-between;
-
-border-bottom: 1px solid #292934; }
-
-.close { width: 40px; height: 40px;
-
-border: 0;
-
-border-radius: 9px;
-
-background: #252530;
-
-color: white;
-
-font-size: 23px; }
-
-.close:hover { background: #ff1744; }
-
-.cart-list { flex: 1;
-
-padding: 20px;
-
-overflow-y: auto; }
-
-.empty { height: 100%;
-
-display: flex;
-
-flex-direction: column;
-
-align-items: center;
-
-justify-content: center;
-
-color: #777;
-
-font-size: 45px;
-
-text-align: center; }
-
-.empty p { font-size: 15px;
-
-margin-top: 10px; }
-
-.cart-item { display: flex;
-
-align-items: center;
-
-gap: 12px;
-
-padding: 15px 0;
-
-border-bottom: 1px solid #292934; }
-
-.cart-icon { width: 55px; height: 55px;
-
-display: flex;
-
-align-items: center;
-
-justify-content: center;
-
-background: #29151d;
+margin-bottom: 20px;
 
 border-radius: 10px;
 
-font-size: 25px; }
+background: #242431;
 
-.cart-details { flex: 1; }
+font-size: 70px; }
 
-.cart-details h4 { margin-bottom: 5px; }
+.game-card h3 { margin-bottom: 8px; }
 
-.cart-details strong { color: #ffd600; }
+.game-card p { margin-bottom: 15px;
 
-.quantity { display: flex;
+color: #777; }
 
-align-items: center;
-
-gap: 7px;
-
-margin-top: 8px; }
-
-.quantity button { width: 26px; height: 26px;
-
-border: 0;
-
-border-radius: 6px;
-
-background: #292934;
-
-color: white; }
-
-.quantity button:hover { background: #ff1744; }
-
-.remove { border: 0;
-
-background: transparent;
-
-color: #ff1744;
-
-font-size: 18px; }
-
-.cart-bottom { padding: 20px;
-
-border-top: 1px solid #292934; }
-
-.total { display: flex;
-
-justify-content: space-between;
+.game-card strong { display: block;
 
 margin-bottom: 15px;
 
-font-size: 20px; }
+color: #ffd600; }
 
-.total strong { color: #ffd600; }
+.buy-button { width: 100%;
 
-.checkout-button { width: 100%;
+padding: 12px;
 
-padding: 15px;
+border: none; border-radius: 8px;
 
-border: 0;
-
-border-radius: 10px;
-
-background: linear-gradient( 135deg, #ff1744, #ff6d00 );
+background: #ff1744;
 
 color: white;
 
-font-weight: bold;
+font-weight: bold; }
 
-transition: .3s; }
+.buy-button:hover { background: #ff6d00; }
 
-.checkout-button:hover { transform: translateY(-3px); }
-
-/* ===================================== MODAIS ===================================== */
+/* MODAIS */
 
 .modal { position: fixed;
 
 inset: 0;
 
-z-index: 3000;
+z-index: 5000;
 
-display: flex;
+display: flex; align-items: center; justify-content: center;
 
-align-items: center;
+background: rgba(0,0,0,.8);
 
-justify-content: center;
-
-padding: 20px;
-
-background: rgba(0,0,0,.85);
-
-opacity: 0;
-
-visibility: hidden;
+opacity: 0; visibility: hidden;
 
 transition: .3s; }
 
-.modal.show { opacity: 1;
+.modal.show { opacity: 1; visibility: visible; }
 
-visibility: visible; }
+.modal-box { position: relative;
 
-.checkout-box, .login-box { position: relative;
-
-width: 480px;
-
-max-width: 100%;
+width: 450px; max-width: 90%;
 
 padding: 30px;
-
-border-radius: 18px;
 
 background: #15151f;
 
 border: 1px solid #ff1744;
 
-box-shadow: 0 0 50px rgba(255,23,68,.2); }
+border-radius: 15px; }
 
-.checkout-box h2, .login-box h2 { margin-bottom: 8px; }
+.modal-box h2 { margin-bottom: 20px; }
 
-.checkout-subtitle { color: #777;
+.close { position: absolute;
 
-margin-bottom: 25px; }
+top: 12px; right: 12px;
 
-.checkout-box > .close, .login-box > .close { position: absolute;
+width: 35px; height: 35px;
 
-top: 15px;
+border: none; border-radius: 7px;
 
-right: 15px; }
+background: #292936; color: white;
 
-.checkout-box label { display: block;
+font-size: 20px; }
 
-margin: 18px 0 8px;
+.close:hover { background: #ff1744; }
 
-color: #aaa;
+#cartItems { margin: 20px 0; }
 
-font-size: 13px; }
+.cart-product { display: flex;
 
-.options { display: flex;
+align-items: center; justify-content: space-between;
 
-gap: 10px; }
+padding: 12px 0;
 
-.option { flex: 1;
+border-bottom: 1px solid #292936; }
 
-padding: 13px;
+.cart-product button { border: none;
 
-border: 1px solid #343440;
-
-border-radius: 9px;
-
-background: #101019;
-
-color: #aaa;
-
-transition: .3s; }
-
-.option:hover { border-color: #ff6d00; }
-
-.option.active { background: #ff1744;
-
-border-color: #ff1744;
-
-color: white; }
-
-#payment { width: 100%;
-
-padding: 13px;
-
-border: 1px solid #343440;
-
-border-radius: 9px;
-
-background: #101019;
+background: #ff1744;
 
 color: white;
 
-outline: none; }
+border-radius: 5px;
 
-.purchase-summary { margin: 25px 0;
+padding: 5px 8px; }
 
-padding: 15px;
+#cartTotal { color: #ffd600; }
 
-display: grid;
+.modal-box input { width: 100%;
 
-grid-template-columns: 1fr 1fr;
+padding: 13px;
 
-gap: 10px;
+margin-bottom: 12px;
 
-background: #101019;
-
-border-radius: 10px; }
-
-.purchase-summary strong { color: #ffd600;
-
-text-align: right; }
-
-.confirm-button { width: 100%;
-
-padding: 15px;
-
-border: 0;
-
-border-radius: 10px;
-
-background: linear-gradient( 135deg, #ff1744, #ff6d00 );
-
-color: white;
-
-font-weight: bold;
-
-transition: .3s; }
-
-.confirm-button:hover { transform: translateY(-3px); }
-
-.login-box { display: flex;
-
-flex-direction: column;
-
-gap: 15px; }
-
-.login-box input { width: 100%;
-
-padding: 14px;
-
-border: 1px solid #343440;
-
-border-radius: 9px;
+border: 1px solid #333340; border-radius: 8px;
 
 background: #0d0d14;
 
@@ -898,4 +312,62 @@ color: white;
 
 outline: none; }
 
-/* ===================================== TO
+.modal-box .main-button { width: 100%; }
+
+/* TOAST */
+
+.toast { position: fixed;
+
+right: 20px; bottom: 20px;
+
+z-index: 10000;
+
+padding: 15px 20px;
+
+border-radius: 8px;
+
+background: #ff1744;
+
+color: white;
+
+font-weight: bold;
+
+transform: translateY(100px);
+
+opacity: 0;
+
+transition: .3s; }
+
+.toast.show { transform: translateY(0);
+
+opacity: 1; }
+
+/* TEMA CLARO */
+
+body.light { background: #f2f2f5; color: #111; }
+
+body.light header { background: white; }
+
+body.light nav a { color: #111; }
+
+body.light .game-card { background: white; }
+
+body.light .filter { background: white; color: #333; }
+
+body.light .modal-box { background: white; color: #111; }
+
+/* CELULAR */
+
+@media (max-width: 700px) {
+
+nav { display: none; }
+
+.hero { min-height: 500px; }
+
+.countdown div { width: 70px; padding: 10px 5px; }
+
+.countdown strong { font-size: 25px; }
+
+.countdown small { font-size: 8px; }
+
+}
