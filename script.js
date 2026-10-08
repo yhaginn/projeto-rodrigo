@@ -1,34 +1,17 @@
-const games = [
 
-{ id: 1, name: "Cyber Nexus", category: "Ação", price: 149.90, icon: "🤖" },
+/* ========================================= V.O.X — SCRIPT PRINCIPAL ========================================= */
 
-{ id: 2, name: "Dragon Realms", category: "RPG", price: 199.90, icon: "🐉" },
-
-{ id: 3, name: "Neon Racing", category: "Corrida", price: 119.90, icon: "🏎️" },
-
-{ id: 4, name: "Football 26", category: "Esportes", price: 179.90, icon: "⚽" },
-
-{ id: 5, name: "Space War", category: "Ação", price: 89.90, icon: "🚀" },
-
-{ id: 6, name: "Shadow Kingdom", category: "RPG", price: 159.90, icon: "⚔️" },
-
-{ id: 7, name: "Turbo X", category: "Corrida", price: 99.90, icon: "🏁" },
-
-{ id: 8, name: "Basket Pro", category: "Esportes", price: 129.90, icon: "🏀" }
-
-];
+/* ========================================= VARIÁVEIS ========================================= */
 
 let cart = [];
 
 let favorites = [];
 
-let currentCategory = "Todos";
+const cartButton = document.getElementById("cartButton");
 
-const gamesGrid = document.getElementById("gamesGrid");
+const cartPanel = document.getElementById("cart");
 
-const searchInput = document.getElementById("searchInput");
-
-const cartElement = document.getElementById("cart");
+const closeCart = document.getElementById("closeCart");
 
 const cartItems = document.getElementById("cartItems");
 
@@ -38,193 +21,85 @@ const cartTotal = document.getElementById("cartTotal");
 
 const toast = document.getElementById("toast");
 
-const modal = document.getElementById("modal");
+/* ========================================= ABRIR CARRINHO ========================================= */
 
-/* ========================= RENDERIZAR JOGOS ========================= */
+if (cartButton) {
 
-function renderGames() {
+cartButton.addEventListener("click", () => {
 
-const search = searchInput.value .toLowerCase() .trim();
-
-const filtered = games.filter(game => {
-
-const matchesName = game.name .toLowerCase() .includes(search);
-
-const matchesCategory = currentCategory === "Todos" || game.category === currentCategory;
-
-return matchesName && matchesCategory;
-
-});
-
-gamesGrid.innerHTML = "";
-
-if (filtered.length === 0) {
-
-gamesGrid.innerHTML = <div style=" grid-column:1/-1; text-align:center; padding:50px; color:#777; "> <h3>Nenhum jogo encontrado 😢</h3> <p>Tente outra pesquisa.</p> </div> ;
-
-return; }
-
-filtered.forEach(game => {
-
-const favorite = favorites.includes(game.id);
-
-const card = document.createElement("article");
-
-card.className = "game-card";
-
-card.innerHTML = `
-
-<button class="favorite-button 
-𝑓
-𝑎
-𝑣
-𝑜
-𝑟
-𝑖
-𝑡
-𝑒
-?
-"
-𝑎
-𝑐
-𝑡
-𝑖
-𝑣
-𝑒
-"
-:
-"
-"
-"
-𝑜
-𝑛
-𝑐
-𝑙
-𝑖
-𝑐
-𝑘
-=
-"
-𝑡
-𝑜
-𝑔
-𝑔
-𝑙
-𝑒
-𝐹
-𝑎
-𝑣
-𝑜
-𝑟
-𝑖
-𝑡
-𝑒
-(
-{game.id})" > ${favorite ? "♥" : "♡"} </button>
-
-<div class="game-cover"> ${game.icon} </div>
-
-<div class="game-info">
-
-<h3> ${game.name} </h3>
-
-<p> ${game.category} </p>
-
-<div class="game-bottom">
-
-<span class="game-price"> R$ ${formatPrice(game.price)} </span>
-
-<button class="buy-button" onclick="addToCart(${game.id})" > Comprar </button>
-
-</div>
-
-</div>
-
-`;
-
-gamesGrid.appendChild(card);
+cartPanel.classList.add("open");
 
 });
 
 }
 
-/* ========================= FORMATAÇÃO ========================= */
+/* ========================================= FECHAR CARRINHO ========================================= */
 
-function formatPrice(price) {
+if (closeCart) {
 
-return price .toFixed(2) .replace(".", ",");
+closeCart.addEventListener("click", () => {
 
-}
-
-/* ========================= PESQUISA ========================= */
-
-searchInput.addEventListener( "input", renderGames );
-
-/* ========================= FILTROS ========================= */
-
-document .querySelectorAll(".filter") .forEach(button => {
-
-button.addEventListener( "click", () => {
-
-document .querySelectorAll(".filter") .forEach(item => item.classList.remove("active") );
-
-button.classList.add("active");
-
-currentCategory = button.dataset.category;
-
-renderGames();
-
-} );
+cartPanel.classList.remove("open");
 
 });
 
-/* ========================= FAVORITOS ========================= */
+}
 
-function toggleFavorite(id) {
+/* ========================================= ADICIONAR AO CARRINHO ========================================= */
 
-if (favorites.includes(id)) {
+document .querySelectorAll(".buy-button") .forEach(button => {
 
-favorites = favorites.filter( item => item !== id );
+button.addEventListener("click", () => {
 
-showToast( "Removido dos favoritos 💔" );
+const card = button.closest(".game-card");
+
+if (!card) return;
+
+const name = card.querySelector("h3") .textContent;
+
+const priceText = card.querySelector(".game-price") .textContent .replace("R$", "") .replace(",", ".");
+
+const price = parseFloat(priceText);
+
+const icon = card.querySelector(".game-cover") .textContent .trim();
+
+const existing = cart.find( item => item.name === name );
+
+if (existing) {
+
+existing.quantity++;
 
 } else {
 
-favorites.push(id);
+cart.push({
 
-showToast( "Adicionado aos favoritos ❤️" );
+name: name,
+
+price: price,
+
+icon: icon,
+
+quantity: 1
+
+});
 
 }
-
-renderGames();
-
-}
-
-/* ========================= CARRINHO ========================= */
-
-function addToCart(id) {
-
-const game = games.find(item => item.id === id);
-
-cart.push(game);
 
 updateCart();
 
-showToast( ${game.name} adicionado ao carrinho 🛒 );
+showToast( 🎮 ${name} foi adicionado ao carrinho! );
 
-}
+});
 
-function removeFromCart(index) {
+});
 
-cart.splice(index, 1);
-
-updateCart();
-
-}
+/* ========================================= ATUALIZAR CARRINHO ========================================= */
 
 function updateCart() {
 
-cartCount.textContent = cart.length;
+if (!cartItems) return;
+
+cartItems.innerHTML = "";
 
 if (cart.length === 0) {
 
@@ -232,7 +107,7 @@ cartItems.innerHTML = `
 
 <div class="empty-cart">
 
-<span> 🛒 </span>
+<span>🛒</span>
 
 <p> Seu carrinho está vazio. </p>
 
@@ -240,174 +115,378 @@ cartItems.innerHTML = `
 
 `;
 
-} else {
+}
 
-cartItems.innerHTML = "";
+let total = 0;
 
-cart.forEach((game, index) => {
+let quantity = 0;
 
-const item = document.createElement("div");
+cart.forEach((item, index) => {
 
-item.className = "cart-item";
+total += item.price * item.quantity;
 
-item.innerHTML = `
+quantity += item.quantity;
 
-<div class="cart-icon"> ${game.icon} </div>
+const element = document.createElement("div");
+
+element.className = "cart-item";
+
+element.innerHTML = `
+
+<div class="cart-icon"> ${item.icon} </div>
 
 <div class="cart-info">
 
-<h4> ${game.name} </h4>
+<h4> ${item.name} </h4>
 
-<span> R$ ${formatPrice(game.price)} </span>
+<span> R$ ${item.price .toFixed(2) .replace(".", ",")} </span>
+
+<small> x${item.quantity} </small>
 
 </div>
 
-<button class="remove-item" onclick="removeFromCart(${index})" > 🗑️ </button>
+<button class="remove-item" data-index="${index}" > ✕ </button>
 
 `;
 
-cartItems.appendChild(item);
+cartItems.appendChild(element);
+
+});
+
+if (cartCount) {
+
+cartCount.textContent = quantity;
+
+}
+
+if (cartTotal) {
+
+cartTotal.textContent = R$ ${total .toFixed(2) .replace(".", ",")};
+
+}
+
+document .querySelectorAll(".remove-item") .forEach(button => {
+
+button.addEventListener( "click", () => {
+
+const index = Number( button.dataset.index );
+
+const item = cart[index];
+
+if ( item.quantity > 1 ) {
+
+item.quantity--;
+
+} else {
+
+cart.splice( index, 1 );
+
+}
+
+updateCart();
+
+} );
 
 });
 
 }
 
-const total = cart.reduce( (sum, game) => sum + game.price, 0 );
+/* ========================================= FAVORITOS ========================================= */
 
-cartTotal.textContent = R$ ${formatPrice(total)};
+document .querySelectorAll(".favorite-button") .forEach(button => {
+
+button.addEventListener( "click", () => {
+
+const card = button.closest(".game-card");
+
+const name = card.querySelector("h3") .textContent;
+
+button.classList.toggle( "active" );
+
+const isFavorite = button.classList.contains( "active" );
+
+if (isFavorite) {
+
+favorites.push(name);
+
+button.textContent = "♥";
+
+showToast( ❤️ ${name} foi adicionado aos favoritos! );
+
+} else {
+
+favorites = favorites.filter( item => item !== name );
+
+button.textContent = "♡";
+
+showToast( 💔 ${name} foi removido dos favoritos. );
 
 }
 
-/* ========================= ABRIR CARRINHO ========================= */
+} );
 
-document .getElementById("cartButton") .addEventListener( "click", () => {
+});
 
-cartElement.classList.add("open");
+/* ========================================= PESQUISA DE JOGOS ========================================= */
+
+const searchInput = document.getElementById( "searchInput" );
+
+if (searchInput) {
+
+searchInput.addEventListener( "input", () => {
+
+const search = searchInput.value .toLowerCase() .trim();
+
+document .querySelectorAll(".game-card") .forEach(card => {
+
+const name = card.querySelector("h3") .textContent .toLowerCase();
+
+if ( name.includes(search) ) {
+
+card.style.display = "";
+
+} else {
+
+card.style.display = "none";
+
+}
+
+});
 
 } );
 
-/* ========================= FECHAR CARRINHO ========================= */
+}
 
-document .getElementById("closeCart") .addEventListener( "click", () => {
+/* ========================================= FILTROS ========================================= */
 
-cartElement.classList.remove("open");
+document .querySelectorAll(".filter") .forEach(filter => {
+
+filter.addEventListener( "click", () => {
+
+document .querySelectorAll(".filter") .forEach(item => {
+
+item.classList.remove( "active" );
+
+});
+
+filter.classList.add( "active" );
+
+const category = filter.dataset.category;
+
+document .querySelectorAll(".game-card") .forEach(card => {
+
+const cardCategory = card.dataset.category;
+
+if ( category === "all" || category === cardCategory ) {
+
+card.style.display = "";
+
+} else {
+
+card.style.display = "none";
+
+}
+
+});
 
 } );
 
-/* ========================= CHECKOUT ========================= */
+});
 
-document .getElementById("checkoutButton") .addEventListener( "click", () => {
+/* ========================================= TEMA CLARO / ESCURO ========================================= */
+
+const themeButton = document.getElementById( "themeButton" );
+
+if (themeButton) {
+
+themeButton.addEventListener( "click", () => {
+
+document.body.classList.toggle( "light" );
+
+const light = document.body.classList.contains( "light" );
+
+themeButton.textContent = light ? "🌙" : "☀️";
+
+localStorage.setItem( "vox-theme", light ? "light" : "dark" );
+
+} );
+
+}
+
+/* ========================================= CARREGAR TEMA SALVO ========================================= */
+
+const savedTheme = localStorage.getItem( "vox-theme" );
+
+if (savedTheme === "light") {
+
+document.body.classList.add( "light" );
+
+if (themeButton) {
+
+themeButton.textContent = "🌙";
+
+}
+
+}
+
+/* ========================================= MODAL DE LOGIN ========================================= */
+
+const loginButton = document.getElementById( "loginButton" );
+
+const loginModal = document.getElementById( "loginModal" );
+
+const closeModal = document.getElementById( "closeModal" );
+
+if ( loginButton && loginModal ) {
+
+loginButton.addEventListener( "click", () => {
+
+loginModal.classList.add( "show" );
+
+} );
+
+}
+
+if ( closeModal && loginModal ) {
+
+closeModal.addEventListener( "click", () => {
+
+loginModal.classList.remove( "show" );
+
+} );
+
+}
+
+/* ========================================= FECHAR MODAL CLICANDO FORA ========================================= */
+
+if (loginModal) {
+
+loginModal.addEventListener( "click", event => {
+
+if ( event.target === loginModal ) {
+
+loginModal.classList.remove( "show" );
+
+}
+
+} );
+
+}
+
+/* ========================================= LOGIN ========================================= */
+
+const loginForm = document.getElementById( "loginForm" );
+
+if (loginForm) {
+
+loginForm.addEventListener( "submit", event => {
+
+event.preventDefault();
+
+const name = document.getElementById( "loginName" ).value;
+
+loginModal.classList.remove( "show" );
+
+showToast( 👋 Bem-vindo à V.O.X, ${name}! );
+
+loginForm.reset();
+
+} );
+
+}
+
+/* ========================================= FINALIZAR COMPRA ========================================= */
+
+const checkoutButton = document.querySelector( ".checkout" );
+
+if (checkoutButton) {
+
+checkoutButton.addEventListener( "click", () => {
 
 if (cart.length === 0) {
 
-showToast( "Seu carrinho está vazio! 🛒" );
+showToast( "🛒 Seu carrinho está vazio!" );
 
-return; }
-
-modal.classList.add("show");
-
-} );
-
-/* ========================= FECHAR MODAL ========================= */
-
-document .getElementById("closeModal") .addEventListener( "click", () => {
-
-modal.classList.remove("show");
-
-} );
-
-modal.addEventListener( "click", event => {
-
-if (event.target === modal) {
-
-modal.classList.remove("show");
+return;
 
 }
 
-} );
+showToast( "🎉 Compra iniciada com sucesso!" );
 
-/* ========================= COMPRA ========================= */
-
-document .getElementById("checkoutForm") .addEventListener( "submit", event => {
-
-event.preventDefault();
+setTimeout(() => {
 
 cart = [];
 
 updateCart();
 
-modal.classList.remove("show");
+cartPanel.classList.remove( "open" );
 
-cartElement.classList.remove("open");
-
-event.target.reset();
-
-showToast( "Compra realizada com sucesso! 🎉" );
+}, 1500);
 
 } );
-
-/* ========================= TEMA ========================= */
-
-document .getElementById("themeButton") .addEventListener( "click", () => {
-
-document .body .classList .toggle("light");
-
-const light = document.body.classList.contains("light");
-
-document .getElementById("themeButton") .textContent = light ? "☀️" : "🌙";
-
-} );
-
-/* ========================= JOGO ALEATÓRIO ========================= */
-
-document .getElementById("randomGame") .addEventListener( "click", () => {
-
-const random = games[ Math.floor( Math.random() * games.length ) ];
-
-showToast( 🎮 Experimente: ${random.name} );
-
-} );
-
-/* ========================= OFERTA ========================= */
-
-document .getElementById("offerButton") .addEventListener( "click", () => {
-
-showToast( "🔥 Você desbloqueou a área de ofertas!" );
-
-document .getElementById("jogos") .scrollIntoView({ behavior: "smooth" });
-
-} );
-
-/* ========================= SOBRE ========================= */
-
-document .getElementById("aboutButton") .addEventListener( "click", () => {
-
-showToast( "🎮 V.O.X — feita para quem ama jogos!" );
-
-} );
-
-/* ========================= NOTIFICAÇÃO ========================= */
-
-let toastTimer;
-
-function showToast(message) {
-
-toast.textContent = message;
-
-toast.classList.add("show");
-
-clearTimeout(toastTimer);
-
-toastTimer = setTimeout( () => {
-
-toast.classList.remove("show");
-
-}, 2500 );
 
 }
 
-/* ========================= INICIALIZAÇÃO ========================= */
+/* ========================================= BOTÃO DE OFERTA ========================================= */
 
-renderGames();
+const offerButton = document.getElementById( "offerButton" );
+
+if (offerButton) {
+
+offerButton.addEventListener( "click", () => {
+
+document .getElementById( "games" ) ?.scrollIntoView({ behavior: "smooth" });
+
+showToast( "🔥 Confira os jogos em oferta!" );
+
+} );
+
+}
+
+/* ========================================= NOTIFICAÇÃO ========================================= */
+
+function showToast(message) {
+
+if (!toast) return;
+
+toast.textContent = message;
+
+toast.classList.add( "show" );
+
+setTimeout(() => {
+
+toast.classList.remove( "show" );
+
+}, 3000);
+
+}
+
+/* ========================================= TECLA ESC ========================================= */
+
+document.addEventListener( "keydown", event => {
+
+if (event.key === "Escape") {
+
+if (cartPanel) {
+
+cartPanel.classList.remove( "open" );
+
+}
+
+if (loginModal) {
+
+loginModal.classList.remove( "show" );
+
+}
+
+}
+
+} );
+
+/* ========================================= INICIALIZAÇÃO ========================================= */
 
 updateCart();
+
+console.log( "🎮 V.O.X carregada com sucesso!" );
+
+console.log( "🔥 Bem-vindo à sua loja de jogos!" );
