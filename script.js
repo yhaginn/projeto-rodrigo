@@ -1,123 +1,67 @@
-/* ========================================= V.O.X - JAVASCRIPT ========================================= */
+/* ====================================== V.O.X JAVASCRIPT ====================================== */
 
-let cartItems = [];
+/* ====================================== CARRINHO ====================================== */
 
-let favorites = [];
-
-let selectedPlatform = "PS5";
-
-let selectedEdition = "Standard";
-
-/* ========================================= ELEMENTOS ========================================= */
-
-const cartPanel = document.getElementById("cart");
+let products = [];
 
 const cartButton = document.getElementById("cartButton");
 
-const closeCartButton = document.getElementById("closeCart");
+const cartModal = document.getElementById("cartModal");
 
-const overlay = document.getElementById("overlay");
+const closeCart = document.getElementById("closeCart");
 
-const cartList = document.getElementById("cartList");
+const cartItems = document.getElementById("cartItems");
 
 const cartCount = document.getElementById("cartCount");
 
 const cartTotal = document.getElementById("cartTotal");
 
-const toast = document.getElementById("toast");
+/* ABRIR */
 
-const checkoutModal = document.getElementById("checkoutModal");
+cartButton.onclick = function () {
 
-const loginModal = document.getElementById("loginModal");
+cartModal.classList.add("show");
 
-/* ========================================= CONTADOR GTA VI ========================================= */
+};
 
-const launchDate = new Date( "2026-11-19T00:00:00-03:00" ).getTime();
+/* FECHAR */
 
-function updateCountdown() {
+closeCart.onclick = function () {
 
-const now = new Date().getTime();
+cartModal.classList.remove("show");
 
-const difference = launchDate - now;
+};
 
-if (difference <= 0) {
+/* ====================================== COMPRAR ====================================== */
 
-document.getElementById("days").textContent = "00"; document.getElementById("hours").textContent = "00"; document.getElementById("minutes").textContent = "00"; document.getElementById("seconds").textContent = "00";
+const buyButtons = document.querySelectorAll(".buy-button");
 
-return; }
+buyButtons.forEach(function (button) {
 
-const days = Math.floor( difference / (1000 * 60 * 60 * 24) );
+button.onclick = function () {
 
-const hours = Math.floor( (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60) );
+const name = button.getAttribute("data-name");
 
-const minutes = Math.floor( (difference % (1000 * 60 * 60)) / (1000 * 60) );
+const price = Number( button.getAttribute("data-price") );
 
-const seconds = Math.floor( (difference % (1000 * 60)) / 1000 );
+const existing = products.find( function (product) {
 
-document.getElementById("days").textContent = String(days).padStart(2, "0");
+return product.name === name;
 
-document.getElementById("hours").textContent = String(hours).padStart(2, "0");
+} );
 
-document.getElementById("minutes").textContent = String(minutes).padStart(2, "0");
+if (existing) {
 
-document.getElementById("seconds").textContent = String(seconds).padStart(2, "0"); }
-
-updateCountdown();
-
-setInterval(updateCountdown, 1000);
-
-/* ========================================= CARRINHO - ABRIR ========================================= */
-
-cartButton.addEventListener("click", () => {
-
-cartPanel.classList.add("open");
-
-overlay.classList.add("show");
-
-});
-
-/* ========================================= CARRINHO - FECHAR ========================================= */
-
-function closeCart() {
-
-cartPanel.classList.remove("open");
-
-overlay.classList.remove("show");
-
-}
-
-closeCartButton.addEventListener( "click", closeCart );
-
-overlay.addEventListener( "click", closeCart );
-
-/* ========================================= ADICIONAR PRODUTOS ========================================= */
-
-document .querySelectorAll(".add-button") .forEach(button => {
-
-button.addEventListener("click", () => {
-
-const name = button.dataset.name;
-
-const price = Number( button.dataset.price );
-
-const icon = button.dataset.icon;
-
-const existingProduct = cartItems.find( item => item.name === name );
-
-if (existingProduct) {
-
-existingProduct.quantity++;
+existing.quantity++;
 
 } else {
 
-cartItems.push({
+products.push({
 
 name: name,
 
 price: price,
 
-icon: icon,
-
 quantity: 1
 
 });
@@ -126,367 +70,130 @@ quantity: 1
 
 updateCart();
 
-showToast( "🎮 " + name + " adicionado ao carrinho!" );
+showMessage( "🎮 " + name + " foi adicionado!" );
+
+};
 
 });
 
-});
-
-/* ========================================= ATUALIZAR CARRINHO ========================================= */
+/* ====================================== ATUALIZAR CARRINHO ====================================== */
 
 function updateCart() {
 
-cartList.innerHTML = "";
+cartItems.innerHTML = "";
 
 let total = 0;
 
 let quantity = 0;
 
-if (cartItems.length === 0) {
+if (products.length === 0) {
 
-cartList.innerHTML = `
-
-<div class="empty">
-
-🛒
-
-<p> Seu carrinho está vazio. </p>
-
-</div>
-
-`;
+cartItems.innerHTML = "<p>Seu carrinho está vazio.</p>";
 
 }
 
-cartItems.forEach((item, index) => {
+products.forEach( function (product, index) {
 
-total += item.price * item.quantity;
+total += product.price * product.quantity;
 
-quantity += item.quantity;
+quantity += product.quantity;
 
-const cartItem = document.createElement("div");
+const div = document.createElement("div");
 
-cartItem.className = "cart-item";
+div.className = "cart-product";
 
-cartItem.innerHTML = `
+div.innerHTML = `
 
-<div class="cart-icon"> ${item.icon} </div>
+<div>
 
-<div class="cart-details">
+<strong> ${product.name} </strong>
 
-<h4> ${item.name} </h4>
+<br>
 
-<strong> R$ ${formatMoney(item.price)} </strong>
-
-<div class="quantity">
-
-<button class="minus-button" data-index="${index}" > − </button>
-
-<span> ${item.quantity} </span>
-
-<button class="plus-button" data-index="${index}" > + </button>
+<span> 
+𝑝
+𝑟
+𝑜
+𝑑
+𝑢
+𝑐
+𝑡
+.
+𝑞
+𝑢
+𝑎
+𝑛
+𝑡
+𝑖
+𝑡
+𝑦
+𝑥
+𝑅
+ ${product.price .toFixed(2) .replace(".", ",")} </span>
 
 </div>
 
-</div>
-
-<button class="remove" data-index="${index}" > 🗑️ </button>
+<button data-index="${index}" class="remove-product" > X </button>
 
 `;
 
-cartList.appendChild(cartItem);
+cartItems.appendChild(div);
 
-});
+} );
 
 cartCount.textContent = quantity;
 
-cartTotal.textContent = "R$ " + formatMoney(total);
+cartTotal.textContent = "R$ " + total .toFixed(2) .replace(".", ",");
 
-activateCartButtons(); }
+activateRemoveButtons();
 
-/* ========================================= BOTÕES DO CARRINHO ========================================= */
+}
 
-function activateCartButtons() {
+/* ====================================== REMOVER PRODUTO ====================================== */
 
-document .querySelectorAll(".plus-button") .forEach(button => {
+function activateRemoveButtons() {
 
-button.addEventListener( "click", () => {
+const buttons = document.querySelectorAll( ".remove-product" );
 
-const index = Number(button.dataset.index);
+buttons.forEach(function (button) {
 
-cartItems[index].quantity++;
+button.onclick = function () {
+
+const index = Number( button.getAttribute( "data-index" ) );
+
+products.splice( index, 1 );
 
 updateCart();
 
-} );
-
-});
-
-document .querySelectorAll(".minus-button") .forEach(button => {
-
-button.addEventListener( "click", () => {
-
-const index = Number(button.dataset.index);
-
-cartItems[index].quantity--;
-
-if ( cartItems[index].quantity <= 0 ) {
-
-cartItems.splice(index, 1);
-
-}
-
-updateCart();
-
-} );
-
-});
-
-document .querySelectorAll(".remove") .forEach(button => {
-
-button.addEventListener( "click", () => {
-
-const index = Number(button.dataset.index);
-
-cartItems.splice(index, 1);
-
-updateCart();
-
-showToast( "🗑️ Produto removido." );
-
-} );
+};
 
 });
 
 }
 
-/* ========================================= DINHEIRO ========================================= */
+/* ====================================== GTA VI ====================================== */
 
-function formatMoney(value) {
+const gtaButton = document.getElementById("gtaButton");
 
-return value .toFixed(2) .replace(".", ",");
+gtaButton.onclick = function () {
 
-}
+const existing = products.find( function (product) {
 
-/* ========================================= FAVORITOS ========================================= */
+return product.name === "GTA VI";
 
-document .querySelectorAll(".favorite") .forEach(button => {
+} );
 
-button.addEventListener( "click", () => {
+if (existing) {
 
-const card = button.closest(".game-card");
-
-const name = card.querySelector("h3") .textContent;
-
-button.classList.toggle("active");
-
-if ( button.classList.contains("active") ) {
-
-button.textContent = "♥";
-
-favorites.push(name);
-
-showToast( "❤️ Adicionado aos favoritos!" );
+existing.quantity++;
 
 } else {
 
-button.textContent = "♡";
+products.push({
 
-favorites = favorites.filter( item => item !== name );
-
-}
-
-} );
-
-});
-
-/* ========================================= PESQUISA ========================================= */
-
-const searchInput = document.getElementById("searchInput");
-
-searchInput.addEventListener( "input", () => {
-
-const search = searchInput.value .toLowerCase() .trim();
-
-document .querySelectorAll(".game-card") .forEach(card => {
-
-const name = card.querySelector("h3") .textContent .toLowerCase();
-
-if (name.includes(search)) {
-
-card.style.display = "";
-
-} else {
-
-card.style.display = "none";
-
-}
-
-});
-
-} );
-
-/* ========================================= FILTROS ========================================= */
-
-document .querySelectorAll(".filter") .forEach(filter => {
-
-filter.addEventListener( "click", () => {
-
-document .querySelectorAll(".filter") .forEach(button => {
-
-button.classList.remove( "active" );
-
-});
-
-filter.classList.add("active");
-
-const category = filter.dataset.category;
-
-document .querySelectorAll(".game-card") .forEach(card => {
-
-if ( category === "all" || card.dataset.category === category ) {
-
-card.style.display = "";
-
-} else {
-
-card.style.display = "none";
-
-}
-
-});
-
-} );
-
-});
-
-/* ========================================= CHECKOUT ========================================= */
-
-const checkoutButton = document.getElementById( "checkoutButton" );
-
-checkoutButton.addEventListener( "click", () => {
-
-if (cartItems.length === 0) {
-
-showToast( "🛒 Seu carrinho está vazio!" );
-
-return;
-
-}
-
-updateCheckout();
-
-checkoutModal.classList.add("show");
-
-} );
-
-/* ========================================= ATUALIZAR CHECKOUT ========================================= */
-
-function updateCheckout() {
-
-let total = 0;
-
-cartItems.forEach(item => {
-
-total += item.price * item.quantity;
-
-});
-
-document.getElementById( "checkoutTotal" ).textContent = "R$ " + formatMoney(total);
-
-document.getElementById( "checkoutProduct" ).textContent = cartItems.length + " produto(s)";
-
-}
-
-/* ========================================= FECHAR CHECKOUT ========================================= */
-
-document .getElementById("closeCheckout") .addEventListener( "click", () => {
-
-checkoutModal.classList.remove( "show" );
-
-} );
-
-/* ========================================= PLATAFORMAS ========================================= */
-
-document .querySelectorAll(".platform") .forEach(button => {
-
-button.addEventListener( "click", () => {
-
-document .querySelectorAll(".platform") .forEach(item => {
-
-item.classList.remove( "active" );
-
-});
-
-button.classList.add("active");
-
-selectedPlatform = button.dataset.platform;
-
-} );
-
-});
-
-/* ========================================= EDIÇÕES ========================================= */
-
-document .querySelectorAll(".edition") .forEach(button => {
-
-button.addEventListener( "click", () => {
-
-document .querySelectorAll(".edition") .forEach(item => {
-
-item.classList.remove( "active" );
-
-});
-
-button.classList.add("active");
-
-selectedEdition = button.dataset.edition;
-
-} );
-
-});
-
-/* ========================================= CONFIRMAR COMPRA ========================================= */
-
-document .getElementById("confirmPurchase") .addEventListener( "click", () => {
-
-const payment = document.getElementById( "payment" ).value;
-
-showToast(
-
-"✅ Pedido realizado! " + selectedPlatform + " • " + selectedEdition + " • " + payment.toUpperCase()
-
-);
-
-checkoutModal.classList.remove( "show" );
-
-cartItems = [];
-
-updateCart();
-
-closeCart();
-
-} );
-
-/* ========================================= BOTÃO GTA VI ========================================= */
-
-document .getElementById("gtaBuyButton") .addEventListener( "click", () => {
-
-const gta = cartItems.find( item => item.name === "Grand Theft Auto VI" );
-
-if (gta) {
-
-gta.quantity++;
-
-} else {
-
-cartItems.push({
-
-name: "Grand Theft Auto VI",
+name: "GTA VI",
 
 price: 449.90,
-
-icon: "🔥",
 
 quantity: 1
 
@@ -496,29 +203,107 @@ quantity: 1
 
 updateCart();
 
-cartPanel.classList.add("open");
+cartModal.classList.add("show");
 
-overlay.classList.add("show");
+showMessage( "🔥 GTA VI adicionado ao carrinho!" );
 
-showToast( "🔥 GTA VI adicionado ao carrinho!" );
+};
+
+/* ====================================== EXPLORAR ====================================== */
+
+const exploreButton = document.getElementById( "exploreButton" );
+
+exploreButton.onclick = function () {
+
+document .getElementById("jogos") .scrollIntoView({ behavior: "smooth" });
+
+};
+
+/* ====================================== FILTROS ====================================== */
+
+const filters = document.querySelectorAll(".filter");
+
+filters.forEach(function (filter) {
+
+filter.onclick = function () {
+
+filters.forEach( function (item) {
+
+item.classList.remove( "active" );
 
 } );
 
-/* ========================================= OFERTAS ========================================= */
+filter.classList.add( "active" );
 
-document .getElementById("offerButton") .addEventListener( "click", () => {
+const selected = filter.getAttribute( "data-filter" );
 
-document .getElementById("games") .scrollIntoView({ behavior: "smooth" });
+const cards = document.querySelectorAll( ".game-card" );
 
-showToast( "🔥 Confira nossos jogos!" );
+cards.forEach(function (card) {
 
-} );
+const category = card.getAttribute( "data-category" );
 
-/* ========================================= TEMA ========================================= */
+if ( selected === "all" || selected === category ) {
+
+card.style.display = "";
+
+} else {
+
+card.style.display = "none";
+
+}
+
+});
+
+};
+
+});
+
+/* ====================================== LOGIN ====================================== */
+
+const loginButton = document.getElementById( "loginButton" );
+
+const closeLogin = document.getElementById( "closeLogin" );
+
+loginButton.onclick = function () {
+
+document .getElementById("loginModal") .classList.add("show");
+
+};
+
+closeLogin.onclick = function () {
+
+document .getElementById("loginModal") .classList.remove("show");
+
+};
+
+/* ====================================== LOGIN ====================================== */
+
+const loginSubmit = document.getElementById( "loginSubmit" );
+
+loginSubmit.onclick = function () {
+
+const name = document .getElementById("loginName") .value .trim();
+
+if (name === "") {
+
+showMessage( "⚠️ Digite seu nome!" );
+
+return;
+
+}
+
+document .getElementById("loginModal") .classList.remove("show");
+
+showMessage( "👋 Bem-vindo, " + name + "!" );
+
+};
+
+/* ====================================== TEMA ====================================== */
 
 const themeButton = document.getElementById( "themeButton" );
 
-themeButton.addEventListener( "click", () => {
+themeButton.onclick = function () {
 
 document.body.classList.toggle( "light" );
 
@@ -532,74 +317,92 @@ themeButton.textContent = "🌙";
 
 }
 
-} );
+};
 
-/* ========================================= LOGIN ========================================= */
+/* ====================================== CHECKOUT ====================================== */
 
-document .getElementById("loginButton") .addEventListener( "click", () => {
+const checkoutButton = document.getElementById( "checkoutButton" );
 
-loginModal.classList.add("show");
+checkoutButton.onclick = function () {
 
-} );
+if (products.length === 0) {
 
-document .getElementById("closeLogin") .addEventListener( "click", () => {
-
-loginModal.classList.remove( "show" );
-
-} );
-
-document .getElementById("loginSubmit") .addEventListener( "click", () => {
-
-const name = document.getElementById( "loginName" ).value.trim();
-
-if (name === "") {
-
-showToast( "⚠️ Digite seu nome!" );
+showMessage( "🛒 Seu carrinho está vazio!" );
 
 return;
 
 }
 
-loginModal.classList.remove( "show" );
+showMessage( "✅ Compra iniciada!" );
 
-showToast( "👋 Bem-vindo, " + name + "!" );
+};
 
-} );
+/* ====================================== CONTADOR GTA VI ====================================== */
 
-/* ========================================= NOTIFICAÇÃO ========================================= */
+const launchDate = new Date( "2026-11-19T00:00:00-03:00" ).getTime();
 
-function showToast(message) {
+function updateCountdown() {
+
+const now = new Date().getTime();
+
+const difference = launchDate - now;
+
+if (difference <= 0) {
+
+document.getElementById( "days" ).textContent = "00";
+
+document.getElementById( "hours" ).textContent = "00";
+
+document.getElementById( "minutes" ).textContent = "00";
+
+document.getElementById( "seconds" ).textContent = "00";
+
+return;
+
+}
+
+const days = Math.floor( difference / (1000 * 60 * 60 * 24) );
+
+const hours = Math.floor( ( difference % (1000 * 60 * 60 * 24) ) / (1000 * 60 * 60) );
+
+const minutes = Math.floor( ( difference % (1000 * 60 * 60) ) / (1000 * 60) );
+
+const seconds = Math.floor( ( difference % (1000 * 60) ) / 1000 );
+
+document.getElementById( "days" ).textContent = String(days).padStart(2, "0");
+
+document.getElementById( "hours" ).textContent = String(hours).padStart(2, "0");
+
+document.getElementById( "minutes" ).textContent = String(minutes).padStart(2, "0");
+
+document.getElementById( "seconds" ).textContent = String(seconds).padStart(2, "0");
+
+}
+
+updateCountdown();
+
+setInterval( updateCountdown, 1000 );
+
+/* ====================================== MENSAGEM ====================================== */
+
+const toast = document.getElementById("toast");
+
+function showMessage(message) {
 
 toast.textContent = message;
 
 toast.classList.add("show");
 
-setTimeout( () => {
+setTimeout( function () {
 
-toast.classList.remove("show");
+toast.classList.remove( "show" );
 
-}, 3000 );
-
-}
-
-/* ========================================= TECLA ESC ========================================= */
-
-document.addEventListener( "keydown", event => {
-
-if (event.key === "Escape") {
-
-closeCart();
-
-checkoutModal.classList.remove( "show" );
-
-loginModal.classList.remove( "show" );
+}, 2500 );
 
 }
 
-} );
+/* ====================================== FINAL ====================================== */
 
-/* ========================================= INICIAR ========================================= */
+console.log( "V.O.X carregada com sucesso!" );
 
 updateCart();
-
-console.log("🎮 V.O.X funcionando!");
