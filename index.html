@@ -1,254 +1,442 @@
 <!DOCTYPE html> <html lang="pt-BR">
 
-<head> <meta charset="UTF-8">
+<head>
+
+<meta charset="UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0"
 
-<title>V.O.X | Loja Gamer</title>
+<title>GTA VI | V.O.X</title>
 
-<link rel="stylesheet" href="style.css"> </head>
+<style>
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body { min-height: 100vh;
+
+display: flex; align-items: center; justify-content: center;
+
+overflow: hidden;
+
+font-family: Arial, Helvetica, sans-serif;
+
+color: white;
+
+background: radial-gradient( circle at 20% 30%, rgba(255, 23, 68, .25), transparent 30% ),
+
+radial-gradient( circle at 80% 70%, rgba(255, 109, 0, .25), transparent 30% ),
+
+linear-gradient( 135deg, #080808, #19070b, #080808 ); }
+
+/* FUNDO */
+
+.background { position: fixed;
+
+inset: 0;
+
+overflow: hidden;
+
+z-index: -1; }
+
+.circle { position: absolute;
+
+border-radius: 50%;
+
+filter: blur(5px);
+
+opacity: .3;
+
+animation: move 8s infinite alternate ease-in-out; }
+
+.circle.one { width: 300px; height: 300px;
+
+top: -100px; left: -100px;
+
+background: #ff1744; }
+
+.circle.two { width: 250px; height: 250px;
+
+bottom: -80px; right: -80px;
+
+background: #ff6d00;
+
+animation-delay: 2s; }
+
+.circle.three { width: 150px; height: 150px;
+
+top: 50%; right: 20%;
+
+background: #ffd600;
+
+animation-delay: 4s; }
+
+@keyframes move {
+
+from { transform: translate(0, 0); }
+
+to { transform: translate(80px, -50px); }
+
+}
+
+/* CONTEÚDO */
+
+.container { width: 90%;
+
+max-width: 1100px;
+
+text-align: center;
+
+padding: 40px; }
+
+/* LOGO */
+
+.vox { color: #ffd600;
+
+font-size: 18px;
+
+font-weight: 900;
+
+letter-spacing: 6px;
+
+margin-bottom: 35px; }
+
+/* TEXTO */
+
+.incoming { color: #ff6d00;
+
+font-size: 15px;
+
+font-weight: bold;
+
+letter-spacing: 5px;
+
+margin-bottom: 15px;
+
+animation: blink 2s infinite; }
+
+@keyframes blink {
+
+0%, 100% { opacity: 1; }
+
+50% { opacity: .45; }
+
+}
+
+h1 { font-size: clamp( 55px, 10vw, 130px );
+
+line-height: .85;
+
+font-weight: 1000;
+
+letter-spacing: -7px;
+
+text-transform: uppercase;
+
+background: linear-gradient( 135deg, #ff1744, #ff6d00, #ffd600 );
+
+-webkit-background-clip: text;
+
+-webkit-text-fill-color: transparent;
+
+filter: drop-shadow( 0 0 25px rgba(255, 23, 68, .3) );
+
+margin-bottom: 30px; }
+
+.subtitle { max-width: 650px;
+
+margin: auto;
+
+color: #c2c2ca;
+
+font-size: 18px;
+
+line-height: 1.7; }
+
+/* CONTAGEM */
+
+.countdown { display: flex;
+
+justify-content: center;
+
+gap: 15px;
+
+margin: 40px 0; }
+
+.time { min-width: 100px;
+
+padding: 20px 15px;
+
+border-radius: 15px;
+
+background: rgba( 255, 255, 255, .05 );
+
+border: 1px solid #34343d;
+
+backdrop-filter: blur(10px);
+
+transition: .3s; }
+
+.time:hover { transform: translateY(-6px);
+
+border-color: #ff1744;
+
+box-shadow: 0 0 25px rgba(255, 23, 68, .2); }
+
+.time strong { display: block;
+
+font-size: 35px;
+
+color: #ffd600; }
+
+.time span { color: #888;
+
+font-size: 11px;
+
+letter-spacing: 2px; }
+
+/* BOTÕES */
+
+.buttons { display: flex;
+
+justify-content: center;
+
+gap: 12px;
+
+flex-wrap: wrap; }
+
+.button { padding: 15px 25px;
+
+border-radius: 10px;
+
+border: none;
+
+font-size: 14px;
+
+font-weight: bold;
+
+text-decoration: none;
+
+cursor: pointer;
+
+transition: .3s; }
+
+.button:hover { transform: translateY(-4px); }
+
+.primary { color: white;
+
+background: linear-gradient( 135deg, #ff1744, #ff6d00 );
+
+box-shadow: 0 10px 30px rgba(255, 23, 68, .25); }
+
+.secondary { color: white;
+
+background: #17171e;
+
+border: 1px solid #383840; }
+
+.secondary:hover { border-color: #ffd600;
+
+color: #ffd600; }
+
+/* MENSAGEM */
+
+#message { min-height: 25px;
+
+margin-top: 25px;
+
+color: #ffd600;
+
+font-weight: bold; }
+
+/* RESPONSIVO */
+
+@media (max-width: 600px) {
+
+.container { padding: 20px; }
+
+h1 { font-size: 58px;
+
+letter-spacing: -4px; }
+
+.subtitle { font-size: 15px; }
+
+.countdown { gap: 7px; }
+
+.time { min-width: 70px;
+
+padding: 14px 8px; }
+
+.time strong { font-size: 24px; }
+
+.time span { font-size: 8px; }
+
+}
+
+</style>
+
+</head>
 
 <body>
 
-<!-- ================= HEADER ================= -->
+<!-- FUNDO -->
 
-<header class="header">
+<div class="background">
 
-<a href="#inicio" class="logo"> V<span>.O.X</span> </a>
+<div class="circle one"></div>
 
-<nav class="nav">
+<div class="circle two"></div>
 
-<a href="#inicio"> Início </a>
-
-<a href="#jogos"> Jogos </a>
-
-<a href="#ofertas"> Ofertas </a>
-
-<a href="#sobre"> Sobre </a>
-
-</nav>
-
-<div class="header-actions">
-
-<button class="icon-button" id="themeButton" title="Mudar tema" > 🌙 </button>
-
-<button class="icon-button" id="cartButton" title="Abrir carrinho" > 🛒 <span id="cartCount">0</span> </button>
+<div class="circle three"></div>
 
 </div>
 
-</header>
+<!-- CONTEÚDO -->
 
-<!-- ================= HERO ================= -->
+<main class="container">
 
-<main>
+<div class="vox"> V.O.X </div>
 
-<section class="hero" id="inicio" >
+<div class="incoming"> ⚠️ SOMETHING BIG IS COMING ⚠️ </div>
 
-<div class="hero-content">
+<h1> GTA VI<br> IS INCOMING!! </h1>
 
-<p class="hero-label"> ⚡ BEM-VINDO À V.O.X </p>
+<p class="subtitle">
 
-<h1> ENTRE NO <span>UNIVERSO</span> DOS JOGOS. </h1>
+Prepare-se para a próxima grande aventura. <br>
 
-<p class="hero-description"> Descubra novos mundos, desafios incríveis e os melhores jogos em um só lugar. </p>
+<strong> Grand Theft Auto VI </strong>
 
-<div class="hero-buttons">
+está chegando.
 
-<a href="#jogos" class="button primary" > Explorar jogos 🎮 </a>
+</p>
 
-<!-- ABRE OUTRA ABA --> <a href="https://store.steampowered.com/" target="_blank" rel="noopener noreferrer" class="button secondary" > Steam ↗ </a>
+<!-- CONTADOR -->
+
+<div class="countdown">
+
+<div class="time">
+
+<strong id="days"> 00 </strong>
+
+<span> DIAS </span>
+
+</div>
+
+<div class="time">
+
+<strong id="hours"> 00 </strong>
+
+<span> HORAS </span>
+
+</div>
+
+<div class="time">
+
+<strong id="minutes"> 00 </strong>
+
+<span> MINUTOS </span>
+
+</div>
+
+<div class="time">
+
+<strong id="seconds"> 00 </strong>
+
+<span> SEGUNDOS </span>
 
 </div>
 
 </div>
 
-<div class="hero-decoration">
+<!-- BOTÕES -->
 
-<div class="orb orb-one"></div> <div class="orb orb-two"></div>
+<div class="buttons">
 
-<div class="hero-controller"> 🎮 </div>
+<button class="button primary" id="notifyButton" > 🔔 Quero ser avisado </button>
 
-</div>
+<button class="button secondary" id="trailerButton" > ▶ Ver trailer </button>
 
-</section>
-
-<!-- ================= JOGOS ================= -->
-
-<section class="games-section" id="jogos" >
-
-<div class="section-heading">
-
-<div> <p> CATÁLOGO </p>
-
-<h2> Jogos em destaque </h2> </div>
-
-<button class="button secondary" id="randomGame" > 🎲 Jogo aleatório </button>
+<a href="index.html" class="button secondary" > ← Voltar para V.O.X </a>
 
 </div>
 
-<!-- BUSCA -->
-
-<div class="search-container">
-
-<input type="search" id="searchInput" placeholder="🔎 Procurar um jogo..." >
-
-</div>
-
-<!-- FILTROS -->
-
-<div class="filters">
-
-<button class="filter active" data-category="Todos" > Todos </button>
-
-<button class="filter" data-category="Ação" > Ação </button>
-
-<button class="filter" data-category="RPG" > RPG </button>
-
-<button class="filter" data-category="Corrida" > Corrida </button>
-
-<button class="filter" data-category="Esportes" > Esportes </button>
-
-</div>
-
-<!-- JOGOS -->
-
-<div class="games-grid" id="gamesGrid" > </div>
-
-</section>
-
-<!-- ================= OFERTA ================= -->
-
-<section class="offer-section" id="ofertas" >
-
-<div class="offer">
-
-<div>
-
-<p class="offer-label"> 🔥 OFERTA ESPECIAL </p>
-
-<h2> Até 50% OFF </h2>
-
-<p> Aproveite descontos em jogos selecionados da V.O.X. </p>
-
-</div>
-
-<button class="button primary" id="offerButton" > Aproveitar oferta </button>
-
-</div>
-
-</section>
-
-<!-- ================= SOBRE ================= -->
-
-<section class="about" id="sobre" >
-
-<p class="section-label"> SOBRE A V.O.X </p>
-
-<h2> MAIS QUE UMA LOJA. <span>UMA EXPERIÊNCIA.</span> </h2>
-
-<p> A V.O.X foi criada para gamers que querem descobrir novos jogos, acompanhar lançamentos e encontrar grandes ofertas. </p>
-
-<button class="button primary" id="aboutButton" > Conhecer a V.O.X </button>
-
-</section>
+<div id="message"></div>
 
 </main>
 
-<!-- ================= FOOTER ================= -->
+<script>
 
-<footer>
+/* ========================= CONTADOR ========================= */
 
-<div class="footer-logo"> V<span>.O.X</span> </div>
+/* Data de lançamento definida para a demonstração. */
 
-<p> Sua próxima aventura começa aqui. </p>
+const launchDate = new Date("2027-05-26T00:00:00").getTime();
 
-<div class="social-links">
+function updateCountdown() {
 
-<!-- OUTRAS ABAS -->
+const now = new Date().getTime();
 
-<a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" > YouTube </a>
+const distance = launchDate - now;
 
-<a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" > Instagram </a>
+if (distance <= 0) {
 
-<a href="https://discord.com/" target="_blank" rel="noopener noreferrer" > Discord </a>
+document.getElementById("days") .textContent = "00";
 
-</div>
+document.getElementById("hours") .textContent = "00";
 
-<p class="copyright"> © 2026 V.O.X — Todos os direitos reservados. </p>
+document.getElementById("minutes") .textContent = "00";
 
-</footer>
+document.getElementById("seconds") .textContent = "00";
 
-<!-- ================= CARRINHO ================= -->
+return;
 
-<aside class="cart" id="cart"
+}
 
-<div class="cart-header">
+const days = Math.floor( distance / (1000 * 60 * 60 * 24) );
 
-<h2> Seu carrinho </h2>
+const hours = Math.floor( (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60) );
 
-<button class="close-button" id="closeCart" > × </button>
+const minutes = Math.floor( (distance % (1000 * 60 * 60)) / (1000 * 60) );
 
-</div>
+const seconds = Math.floor( (distance % (1000 * 60)) / 1000 );
 
-<div class="cart-items" id="cartItems" >
+document.getElementById("days") .textContent = String(days).padStart(2, "0");
 
-<div class="empty-cart"> 🛒 <p> Seu carrinho está vazio. </p> </div>
+document.getElementById("hours") .textContent = String(hours).padStart(2, "0");
 
-</div>
+document.getElementById("minutes") .textContent = String(minutes).padStart(2, "0");
 
-<div class="cart-footer">
+document.getElementById("seconds") .textContent = String(seconds).padStart(2, "0");
 
-<div class="cart-total">
+}
 
-<span> Total </span>
+updateCountdown();
 
-<strong id="cartTotal"> R$ 0,00 </strong>
+setInterval( updateCountdown, 1000 );
 
-</div>
+/* ========================= BOTÃO DE NOTIFICAÇÃO ========================= */
 
-<button class="button primary checkout" id="checkoutButton" > Finalizar compra </button>
+document .getElementById("notifyButton") .addEventListener( "click", function () {
 
-</div>
+document .getElementById("message") .textContent = "🔔 Você será avisado quando houver novidades!";
 
-</aside>
+this.textContent = "✓ Notificações ativadas";
 
-<!-- ================= MODAL ================= -->
+this.style.background = "#00a86b";
 
-<div class="modal" id="modal"
+} );
 
-<div class="modal-box">
+/* ========================= TRAILER ========================= */
 
-<button class="close-button" id="closeModal" > × </button>
+document .getElementById("trailerButton") .addEventListener( "click", function () {
 
-<p class="section-label"> V.O.X </p>
+window.open( "https://www.youtube.com/results?searchquery=GTA+VI+trailer", "blank" );
 
-<h2> Finalizar compra </h2>
+} );
 
-<form id="checkoutForm">
-
-<input type="text" placeholder="Seu nome" required >
-
-<input type="email" placeholder="Seu e-mail" required >
-
-<input type="text" placeholder="Número do cartão" maxlength="19" required >
-
-<button class="button primary" type="submit" > Confirmar compra 💳 </button>
-
-</form>
-
-</div>
-
-</div>
-
-<!-- ================= NOTIFICAÇÃO ================= -->
-
-<div class="toast" id="toast"
-
-</div>
-
-<!-- JAVASCRIPT -->
-
-<script src="script.js"></script>
+</script>
 
 </body>
 
