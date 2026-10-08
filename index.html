@@ -1,295 +1,179 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NovaSite</title>
+<!DOCTYPE html> <html lang="pt-BR"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>GameZone | Loja de Jogos</title>
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      background: #0f172a;
-      color: white;
-    }
-
-    header {
-      width: 100%;
-      padding: 20px 8%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: fixed;
-      top: 0;
-      background: rgba(15, 23, 42, 0.9);
-      backdrop-filter: blur(10px);
-      z-index: 1000;
-    }
-
-    .logo {
-      font-size: 24px;
-      font-weight: bold;
-      color: #38bdf8;
-    }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      margin-left: 25px;
-      transition: 0.3s;
-    }
-
-    nav a:hover {
-      color: #38bdf8;
-    }
-
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 100px 20px 50px;
-      background:
-        radial-gradient(circle at top right, #1e40af55, transparent 40%),
-        radial-gradient(circle at bottom left, #0ea5e955, transparent 40%);
-    }
-
-    .hero-content {
-      max-width: 800px;
-    }
-
-    .hero h1 {
-      font-size: clamp(42px, 7vw, 80px);
-      margin-bottom: 20px;
-    }
-
-    .hero h1 span {
-      color: #38bdf8;
-    }
-
-    .hero p {
-      color: #cbd5e1;
-      font-size: 20px;
-      line-height: 1.6;
-      margin-bottom: 35px;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 15px 30px;
-      background: #38bdf8;
-      color: #0f172a;
-      text-decoration: none;
-      border-radius: 10px;
-      font-weight: bold;
-      transition: 0.3s;
-    }
-
-    .btn:hover {
-      transform: translateY(-3px);
-      background: #7dd3fc;
-      box-shadow: 0 10px 30px #38bdf855;
-    }
-
-    section {
-      padding: 100px 8%;
-    }
-
-    .title {
-      text-align: center;
-      font-size: 40px;
-      margin-bottom: 50px;
-    }
-
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 25px;
-      max-width: 1100px;
-      margin: auto;
-    }
-
-    .card {
-      padding: 35px;
-      background: #1e293b;
-      border: 1px solid #334155;
-      border-radius: 15px;
-      transition: 0.3s;
-    }
-
-    .card:hover {
-      transform: translateY(-8px);
-      border-color: #38bdf8;
-    }
-
-    .card .icon {
-      font-size: 40px;
-      margin-bottom: 20px;
-    }
-
-    .card h3 {
-      margin-bottom: 15px;
-      font-size: 22px;
-    }
-
-    .card p {
-      color: #94a3b8;
-      line-height: 1.6;
-    }
-
-    .about {
-      background: #020617;
-      text-align: center;
-    }
-
-    .about p {
-      max-width: 750px;
-      margin: auto;
-      color: #94a3b8;
-      line-height: 1.8;
-      font-size: 18px;
-    }
-
-    .contact {
-      text-align: center;
-    }
-
-    .contact p {
-      color: #94a3b8;
-      margin-bottom: 30px;
-    }
-
-    footer {
-      text-align: center;
-      padding: 30px;
-      border-top: 1px solid #1e293b;
-      color: #64748b;
-    }
-
-    @media (max-width: 768px) {
-      header {
-        padding: 18px 5%;
-      }
-
-      nav {
-        display: none;
-      }
-
-      section {
-        padding: 80px 5%;
-      }
-
-      .cards {
-        grid-template-columns: 1fr;
-      }
-
-      .hero p {
-        font-size: 17px;
-      }
-    }
-  </style>
-</head>
+<link rel="stylesheet" href="style.css"> </head>
 
 <body>
 
-  <header>
-    <div class="logo">NovaSite</div>
+<!-- CABEÇALHO --> <header> <div class="logo"> GAME<span>ZONE</span> </div>
 
-    <nav>
-      <a href="#inicio">Início</a>
-      <a href="#servicos">Serviços</a>
-      <a href="#sobre">Sobre</a>
-      <a href="#contato">Contato</a>
-    </nav>
-  </header>
+<nav> <a href="#inicio">Início</a> <a href="#jogos">Jogos</a> <a href="#ofertas">Ofertas</a> <a href="#contato">Contato</a> </nav>
 
-  <main>
+<div class="header-buttons"> <button class="icon-btn" id="themeBtn"> 🌙 </button>
 
-    <section class="hero" id="inicio">
-      <div class="hero-content">
-        <h1>Crie algo <span>incrível.</span></h1>
+<button class="icon-btn" id="cartBtn"> 🛒 <span id="cartCount">0</span> </button> </div> </header>
 
-        <p>
-          Uma página moderna, rápida e responsiva para apresentar
-          sua empresa, projeto ou negócio na internet.
-        </p>
+<!-- HERO --> <main>
 
-        <a href="#servicos" class="btn">Conheça nossos serviços</a>
-      </div>
-    </section>
+<section class="hero" id="inicio">
 
-    <section id="servicos">
-      <h2 class="title">Nossos Serviços</h2>
+<div class="hero-content">
 
-      <div class="cards">
+<span class="hero-tag"> 🎮 A MELHOR LOJA GAMER </span>
 
-        <div class="card">
-          <div class="icon">🚀</div>
-          <h3>Alta Performance</h3>
-          <p>
-            Sites rápidos e otimizados para proporcionar uma ótima
-            experiência aos visitantes.
-          </p>
-        </div>
+<h1> O próximo jogo da sua <span>aventura.</span> </h1>
 
-        <div class="card">
-          <div class="icon">🎨</div>
-          <h3>Design Moderno</h3>
-          <p>
-            Interfaces bonitas, modernas e pensadas para destacar
-            sua marca.
-          </p>
-        </div>
+<p> Encontre os melhores jogos para PC e consoles, lançamentos incríveis e ofertas especiais. </p>
 
-        <div class="card">
-          <div class="icon">📱</div>
-          <h3>Responsivo</h3>
-          <p>
-            Seu site funcionando perfeitamente em celulares,
-            tablets e computadores.
-          </p>
-        </div>
+<a href="#jogos" class="primary-btn"> Explorar jogos 🎮 </a>
 
-      </div>
-    </section>
+</div>
 
-    <section class="about" id="sobre">
-      <h2 class="title">Sobre nós</h2>
+</section>
 
-      <p>
-        Somos apaixonados por tecnologia e design. Nosso objetivo é
-        transformar ideias em experiências digitais bonitas, simples
-        e eficientes.
-      </p>
-    </section>
+<!-- JOGOS --> <section id="jogos">
 
-    <section class="contact" id="contato">
-      <h2 class="title">Vamos conversar?</h2>
+<div class="section-title"> <div> <span class="small-title"> NOSSO CATÁLOGO </span>
 
-      <p>
-        Entre em contato e transforme sua ideia em realidade.
-      </p>
+<h2> Jogos em destaque </h2> </div> </div>
 
-      <a href="mailto:contato@exemplo.com" class="btn">
-        Entrar em contato
-      </a>
-    </section>
+<!-- BUSCA --> <div class="search-area">
 
-  </main>
+<input type="text" id="search" class="search" placeholder="🔎 Procurar jogo..." >
 
-  <footer>
-    © 2026 NovaSite — Todos os direitos reservados.
-  </footer>
+<div class="categories">
 
-</body>
-</html>
+<button class="category active" data-category="Todos"> Todos </button>
+
+<button class="category" data-category="Ação"> Ação </button>
+
+<button class="category" data-category="RPG"> RPG </button>
+
+<button class="category" data-category="Corrida"> Corrida </button>
+
+<button class="category" data-category="Esportes"> Esportes </button>
+
+</div>
+
+</div>
+
+<!-- CARDS --> <div class="games-grid" id="gamesGrid"> </div>
+
+</section>
+
+<!-- OFERTA --> <section id="ofertas">
+
+<div class="promo">
+
+<div class="promo-content">
+
+<span> 🔥 OFERTA LIMITADA </span>
+
+<h2> Até 50% de desconto </h2>
+
+<p> Aproveite nossas ofertas especiais antes que elas acabem. </p>
+
+</div>
+
+<button class="primary-btn" id="offerBtn"> Ver ofertas </button>
+
+</div>
+
+</section>
+
+</main>
+
+<!-- RODAPÉ --> <footer id="contato">
+
+<div class="footer-logo"> GAME<span>ZONE</span> </div>
+
+<p> A sua loja de jogos favorita. </p>
+
+<p class="copyright"> © 2026 GameZone. Todos os direitos reservados. </p>
+
+</footer>
+
+<!-- CARRINHO --> <aside class="cart" id="cart">
+
+<div class="cart-header">
+
+<div> <span class="small-title"> SUA COMPRA </span>
+
+<h2> Carrinho </h2> </div>
+
+<button class="close-btn" id="closeCart"> × </button>
+
+</div>
+
+<div class="cart-items" id="cartItems">
+
+<div class="empty-cart"> <span>🛒</span>
+
+<p> Seu carrinho está vazio. </p> </div>
+
+</div>
+
+<div class="cart-footer">
+
+<div class="total">
+
+<span>Total</span>
+
+<strong id="cartTotal"> R$ 0,00 </strong>
+
+</div>
+
+<button class="primary-btn checkout" id="checkoutBtn"> Finalizar compra </button>
+
+</div>
+
+</aside>
+
+<!-- MODAL DE PAGAMENTO --> <div class="modal" id="modal">
+
+<div class="modal-content">
+
+<button class="close-btn" id="closeModal"> × </button>
+
+<span class="small-title"> PAGAMENTO </span>
+
+<h2> Finalizar compra </h2>
+
+<form id="checkoutForm">
+
+<div class="form-group">
+
+<label for="name"> Nome </label>
+
+<input id="name" type="text" placeholder="Seu nome" required>
+
+</div>
+
+<div class="form-group">
+
+<label for="email"> E-mail </label>
+
+<input id="email" type="email" placeholder="seu@email.com" required>
+
+</div>
+
+<div class="form-group">
+
+<label for="card"> Número do cartão </label>
+
+<input id="card" type="text" placeholder="0000 0000 0000 0000" maxlength="19" required>
+
+</div>
+
+<button class="primary-btn checkout" type="submit"> Confirmar compra 💳 </button>
+
+</form>
+
+</div>
+
+</div>
+
+<!-- NOTIFICAÇÃO --> <div class="toast" id="toast"> </div>
+
+<script src="script.js"></script>
+
+</body> </html>
